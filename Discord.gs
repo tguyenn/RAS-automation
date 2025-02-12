@@ -3,8 +3,8 @@
  */
 
 
-// const DISCORD_POST_URL = properties['LIVE_DISCORD_WEBHOOK_URL']; // defined in script properties (Script Settings > Scroll to bottom)
-const DISCORD_POST_URL = properties['TEST_DISCORD_WEBHOOK_URL'];
+const DISCORD_POST_URL = properties['LIVE_DISCORD_WEBHOOK_URL']; // defined in script properties (Script Settings > Scroll to bottom)
+// const DISCORD_POST_URL = properties['TEST_DISCORD_WEBHOOK_URL'];
 
 
 const randomColor = Math.floor(Math.random() * 0xFFFFFF);
@@ -98,7 +98,7 @@ function preparePayload() {
             "Content-Type": "application/json",
             },
       "payload": JSON.stringify({
-      "content": discordTag + " " + payloadContentString, // this is the unformatted (normal) text above the rich embed
+      "content": discordTag + " " + payloadContentString + "\n" + specialErrorMessage, // this is the unformatted (normal) text above the rich embed
       "embeds": [{
         "title": `${itemsOrdered} unique links!`,
         "color": randomColor,
@@ -139,7 +139,7 @@ function preparePayload() {
             "Content-Type": "application/json",
             },
       "payload": JSON.stringify({
-      "content": discordTag + " " + payloadContentString, // this is the unformatted (normal) text above the rich embed
+      "content": discordTag + " " + payloadContentString + "\n" + specialErrorMessage, // this is the unformatted (normal) text above the rich embed
       "embeds": [{
         "title": `${itemsOrdered} unique links!`,
         "color": randomColor,
@@ -160,8 +160,8 @@ function preparePayload() {
 
 // posts error message to discord
 function postKill(process) { 
-  // discordTag = "<@533956992272695297>"; // ping colin tan
   items = []; // clear contents
+  console.log(specialErrorMessage);
   const options = {
           "method": "post",
           "headers": {

@@ -117,7 +117,7 @@ function readSheet() {
   if(specialNotes == "") {
     specialNotes = "N/A";
   }
-  clearSheet(lastRow, sheet); // clear sheet for next use
+  // clearSheet(lastRow, sheet); // clear sheet for next use
 }
 
 // delete data from template sheet

@@ -6,8 +6,10 @@ function editMasterSheet() {
   let sheetID = "1uw0LqBbjbEuq2X-QjBsj0W6ebI_K2bclHLlOi9tjy1Q";
   const spreadsheet = SpreadsheetApp.openById(sheetID);
 
-  Logger.log(committeeName);
+  Logger.log("appending to budget sheet of committee: " + committeeName);
   const sheet = spreadsheet.getSheetByName(committeeName); 
+
+  checkBudget(sheetID);
 
   targetRow = sheet.getLastRow() + 1;
 
@@ -29,4 +31,35 @@ function editMasterSheet() {
 
   sheet.getRange(originalTargetRow, 12, 1).setValue(shipping); //overwrite 0 for shipping in first newly written row
 
+}
+
+function checkBudget(sheetID) {
+    let rowNum = 0;
+    switch(committeeName) {
+    case "Demobots":
+      rowNum = 10;
+      break;
+    case "IGVC":
+      rowNum = 11;
+      break;
+    case "RoboMaster":
+      rowNum = 12;
+      break;
+    case "Robotathon":
+      rowNum = 13;
+      break;
+    case "VEXU":
+      rowNum = 14;
+    break;
+  }
+  const spreadsheet = SpreadsheetApp.openById(sheetID);
+  const sheet = spreadsheet.getSheetByName("2024-2025 Budget");
+  let data = sheet.getRange(rowNum, 5).getValues();
+  let remBudget = data.map(row => row[0]);
+  console.log(remBudget);
+
+  if((remBudget - totalPrice) < 0) { 
+    console.log("ran outta money man :(");
+    specialErrorMessage += "\n RAN OUT OF MONEY NOOOOOO (budget for this committee is in the red!!)";
+  }
 }

@@ -14,7 +14,7 @@ function createSheet() {
   let today = new Date();
   let formattedDate = (today.getMonth() + 1) + '.' + today.getDate() + '.' + today.getFullYear();
   const spreadsheetName =  formattedDate + " " + vendorName;
-  const folderId = "1_Kgx5IAtx_0nBMLRLbzc3MJvsFQBVyMp"; // https://drive.google.com/drive/u/1/folders/1_Kgx5IAtx_0nBMLRLbzc3MJvsFQBVyMp
+  const folderId = "12ZWilnix5Hu9dVWPDvMY_lwToCCMo319"; // https://drive.google.com/drive/folders/12ZWilnix5Hu9dVWPDvMY_lwToCCMo319
  
   // Create the new spreadsheet
   const newSpreadsheet = SpreadsheetApp.create(spreadsheetName); 
