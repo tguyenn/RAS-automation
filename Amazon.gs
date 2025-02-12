@@ -12,6 +12,9 @@ function generateAmazonLink() {
     }
     amazonLink = amazonLink + "ASIN." + i + "=" + asin + "&Quantity." + i + "=" +  quantityArr[i-1] + "&";
   }
+
+  amazonLink = amazonLink + "tag=lolollol";
+
 }
 
 function extractASIN(url) {

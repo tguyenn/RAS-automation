@@ -3,8 +3,8 @@
  */
 
 
-const DISCORD_POST_URL = properties['LIVE_DISCORD_WEBHOOK_URL']; // defined in script properties (Script Settings > Scroll to bottom)
-// const DISCORD_POST_URL = properties['TEST_DISCORD_WEBHOOK_URL'];
+// const DISCORD_POST_URL = properties['LIVE_DISCORD_WEBHOOK_URL']; // defined in script properties (Script Settings > Scroll to bottom)
+const DISCORD_POST_URL = properties['TEST_DISCORD_WEBHOOK_URL'];
 
 
 const randomColor = Math.floor(Math.random() * 0xFFFFFF);
@@ -17,9 +17,6 @@ let options; // text customizations for embed
 function postEmbed() { // yeah dont ask me to write clean code lmao
   if(itemsOrdered > 17) {
     preparePayload();
-
-    Logger.log(totalPrice);
-
     response = UrlFetchApp.fetch(DISCORD_POST_URL, options); // message 1 of 2
     Utilities.sleep(1000); // ensure second message gets sent as second message
     options = { // overwrite options for next message post
@@ -45,7 +42,7 @@ function postEmbed() { // yeah dont ask me to write clean code lmao
 
     response = UrlFetchApp.fetch(DISCORD_POST_URL, options); // message 2 of 2
   }
-  else {
+  else { // one embed in one message only
     preparePayload();
     response = UrlFetchApp.fetch(DISCORD_POST_URL, options);
   }
@@ -64,7 +61,7 @@ function preparePayload() {
     
     let splitIndex = 17;
 
-    nameArr1 = nameArr.slice(0, splitIndex);
+    let nameArr1 = nameArr.slice(0, splitIndex);
     let quantityArr1 = quantityArr.slice(0, splitIndex);
     let linksArr1 = linksArr.slice(0, splitIndex);
     let priceArr1 = priceArr.slice(0, splitIndex);
@@ -76,7 +73,7 @@ function preparePayload() {
     embed1 = [
         { "name": "Committee", "value": committeeName, "inline": false },
         { "name": "Special Notes", "value": specialNotes, "inline": false },
-        { "name": "Contact", "value": email, "inline": false },
+        // { "name": "Contact", "value": email, "inline": false },
         { "name": "Vendor", "value": vendorName, "inline": false },
         { "name": "Shipping", "value": `$${parseFloat(shipping).toFixed(2)}`, "inline": false},
         { "name": "Shipping Type", "value": shippingType, "inline": false },
@@ -123,7 +120,7 @@ function preparePayload() {
     items = [
         { "name": "Committee", "value": committeeName, "inline": false },
         { "name": "Special Notes", "value": specialNotes, "inline": false },
-        { "name": "Contact", "value": email, "inline": false },
+        // { "name": "Contact", "value": email, "inline": false },
         { "name": "Vendor", "value": vendorName, "inline": false },
         { "name": "Shipping", "value": `$${parseFloat(shipping).toFixed(2)}`, "inline": false},
         { "name": "Shipping Type", "value": shippingType, "inline": false },

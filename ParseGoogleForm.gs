@@ -86,7 +86,6 @@ function parseForm(e) {
     if (question.includes("Vendor")) {
       vendorName = answer;
       if(answer === "Amazon") {
-        discordTag = "<@365619835939455005>"; // ping annie 
         isAmazon = true;
       }
     }

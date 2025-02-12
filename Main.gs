@@ -2,7 +2,7 @@
 let thumbNailUrl = "https://i.imgur.com/jvF3FoH.jpg";  // default
 let footerUrl = ""; // required for Discord embed's footer
 let footerText = ""; // bottom text of embed
-let discordTag = "";  // for autopinging
+let discordTag = "<@533956992272695297>" ; // ping colin
 let newSheetUrl = "";
 let inputSheetID = "";
 let email = "N/A"; // for notification to form submitter

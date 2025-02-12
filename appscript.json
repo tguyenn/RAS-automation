@@ -20,7 +20,8 @@
     "https://www.googleapis.com/auth/drive.file",
     "https://www.googleapis.com/auth/forms",
     "https://www.googleapis.com/auth/forms.currentonly",
-    "https://www.googleapis.com/auth/script.external_request"
+    "https://www.googleapis.com/auth/script.external_request",
+    "https://mail.google.com/"
   ],
   "runtimeVersion": "V8"
 }

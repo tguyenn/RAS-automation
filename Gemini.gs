@@ -5,7 +5,7 @@ const geminiApiKey = properties['GOOGLE_API_KEY'];
 const geminiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${geminiApiKey}`;
 
 function testGemini(prompt) {
-  console.log(prompt);
+  console.log("prompt: " + prompt);
   let output = callGemini(prompt);
   console.log(output);
   return output;

@@ -3,7 +3,7 @@
  */
 
 
-let amazonBuyerName = "Annie Vu"; // for Amazon ESL form
+let amazonBuyerName = "Colin Tan"; // for Amazon ESL form
 
 function getESLForm() {
   return replaceForm();
@@ -24,7 +24,8 @@ function replaceForm() {
   for(i = 0; i < itemsOrdered; i++) {
     prompt += nameArr[i] + " ";
   }
-  let descRes = testGemini(prompt);
+  let descRes = "";
+  descRes = testGemini(prompt);
 
   let reasonRes = "Materials for " + committeeName + " committee project";
 
@@ -38,7 +39,8 @@ function replaceForm() {
     nonAmazonESLLink = nonAmazonESLLink.replace("amount", totalPrice);
     eslLinkRes = nonAmazonESLLink;
   }
-  eslLinkRes = eslLinkRes.replace("email", email);
+  // eslLinkRes = eslLinkRes.replace("email", email);
+  eslLinkRes = eslLinkRes.replace("email", "ut.ieee.ras@gmail.com"); // hardcode email to main ras account
   eslLinkRes = eslLinkRes.replace("date", formattedDate);
   eslLinkRes = eslLinkRes.replace("specialNotes", specialNotes);
 

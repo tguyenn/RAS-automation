@@ -36,15 +36,14 @@ function readSheet() {
     }
   }
 
-  let miscData = sheet.getRange('H3:H8').getValues(); // put data from table on right into an array
+  let miscData = sheet.getRange('H3:H7').getValues(); // put data from table on right into an array
   miscData = miscData.map(row => row[0]); // flatten to 1D array
 
   committeeName = miscData[0];
   vendorName = miscData[1];
-  email = miscData[2];
-  shippingType = miscData[3];
-  shipping = miscData[4];
-  specialNotes = miscData[5] + "\n";
+  shippingType = miscData[2];
+  shipping = miscData[3];
+  specialNotes = miscData[4] + "\n";
 
   itemsOrdered = lastRow - 1;
 
@@ -74,7 +73,6 @@ function readSheet() {
   }
 
   if(vendorName == "Amazon" || vendorName == "amazon" || vendorName == "AMZN" || vendorName == "AMAZON") {
-    discordTag = "<@365619835939455005>"; // ping annie 
     isAmazon = true;
   }
 
