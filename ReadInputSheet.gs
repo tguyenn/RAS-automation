@@ -48,25 +48,23 @@ function readSheet() {
   itemsOrdered = lastRow - 1;
 
   switch(committeeName) {
+    case "General":
+      // nothing
+      break;
     case "VEXU":
       thumbNailUrl = "https://i.imgur.com/2vwgZHO.jpg";
-      committeeName = "VEXU";
       break;
     case "RoboMaster":
       thumbNailUrl = "https://i.imgur.com/4UEoyMs.jpg";
-      committeeName = "RoboMaster";
       break;
     case "Demobots":
       thumbNailUrl = "https://i.imgur.com/nrR07HS.jpg";
-      committeeName = "Demobots";
       break;
     case "IGVC":
       thumbNailUrl = "https://i.imgur.com/M5TQiDf.jpg";
-      committeeName = "IGVC";
       break;
     case "Robotathon":
       thumbNailUrl = "https://i.imgur.com/XHbsPvd.jpg";
-      committeeName = "Robotathon";
       break;
     default: // if someone forgets to put the committee then the script explodes
       specialErrorMessage = "someone forgot to put the committee lol"
