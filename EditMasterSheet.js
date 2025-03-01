@@ -3,7 +3,7 @@
  * */ 
 
 function editMasterSheet() {
-  let sheetID = "1Ud5ZEs9mdV4Lk5InK7P9jcXaRlwkBsqSURoN1luDPls"; // https://docs.google.com/spreadsheets/d/1Ud5ZEs9mdV4Lk5InK7P9jcXaRlwkBsqSURoN1luDPls/edit?gid=0#gid=0
+  let sheetID = "1uw0LqBbjbEuq2X-QjBsj0W6ebI_K2bclHLlOi9tjy1Q"; // https://docs.google.com/spreadsheets/d/1uw0LqBbjbEuq2X-QjBsj0W6ebI_K2bclHLlOi9tjy1Q/edit?gid=1275180039#gid=1275180039
 
   const spreadsheet = SpreadsheetApp.openById(sheetID);
 
@@ -35,32 +35,32 @@ function editMasterSheet() {
 }
 
 function checkCommitteeBudget(sheetID) {
-  //   let rowNum = 0;
-  //   switch(committeeName) {
-  //   case "Demobots":
-  //     rowNum = 10;
-  //     break;
-  //   case "IGVC":
-  //     rowNum = 11;
-  //     break;
-  //   case "RoboMaster":
-  //     rowNum = 12;
-  //     break;
-  //   case "Robotathon":
-  //     rowNum = 13;
-  //     break;
-  //   case "VEXU":
-  //     rowNum = 14;
-  //   break;
-  // }
-  // const spreadsheet = SpreadsheetApp.openById(sheetID);
-  // const sheet = spreadsheet.getSheetByName("2024-2025 Budget");
-  // let data = sheet.getRange(rowNum, 5).getValues();
-  // let remBudget = data.map(row => row[0]);
-  // console.log(remBudget);
+    let rowNum = 0;
+    switch(committeeName) {
+    case "Demobots":
+      rowNum = 10;
+      break;
+    case "IGVC":
+      rowNum = 11;
+      break;
+    case "RoboMaster":
+      rowNum = 12;
+      break;
+    case "Robotathon":
+      rowNum = 13;
+      break;
+    case "VEXU":
+      rowNum = 14;
+    break;
+  }
+  const spreadsheet = SpreadsheetApp.openById(sheetID);
+  const sheet = spreadsheet.getSheetByName("2024-2025 Budget");
+  let data = sheet.getRange(rowNum, 5).getValues();
+  let remBudget = data.map(row => row[0]);
+  console.log("remaining budget: " + remBudget);
 
-  // if((remBudget - totalPrice) < 0) { 
-  //   console.log("ran outta money man :(");
-  //   specialErrorMessage += "\n RAN OUT OF MONEY NOOOOOO (budget for this committee is in the red!!)";
-  // }
+  if((remBudget - totalPrice) < 0) { 
+    console.log("ran outta money man :(");
+    specialErrorMessage += "\nRAN OUT OF MONEY NOOOOOO (budget for this committee is in the red!!)";
+  }
 }

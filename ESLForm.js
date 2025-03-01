@@ -2,9 +2,6 @@
  * edit and return esl link as string based on global variables
  */
 
-
-let amazonBuyerName = "Annie Vu"; // for Amazon ESL form
-
 function getESLForm() {
   return replaceForm();
 }

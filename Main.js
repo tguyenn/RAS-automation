@@ -1,9 +1,11 @@
 // GLOBAL VARIABLES
+let amazonBuyerName = "Annie Vu"; // for Amazon ESL form
+let amazonBuyerDiscordTag = "<@365619835939455005>"; // Annie Vu 
+// let discordTag = "<@533956992272695297>" ; // default ping recipient
+let discordTag = "init discord tag here" ; // ping nobody
 let thumbNailUrl = "https://i.imgur.com/jvF3FoH.jpg";  // default
 let footerUrl = ""; // required for Discord embed's footer
 let footerText = ""; // bottom text of embed
-// let discordTag = "<@533956992272695297>" ; // ping colin
-let discordTag = "init discord tag here" ; // ping nobody
 let newSheetUrl = "";
 let inputSheetID = "";
 let email = "N/A"; // for notification to form submitter
@@ -80,6 +82,7 @@ function mainOnSubmit(e) {
     }
   } else {
     try {
+      discordTag = amazonBuyerDiscordTag;
       generateAmazonLink();
     } catch(e) {
       let stack = e.stack.split("\n");

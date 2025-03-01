@@ -8,19 +8,16 @@ function checkAndPrintEmailsWithLabel() {
   const labelName = "Package Script Check Flag (should be automatically removed)";
   const label = GmailApp.getUserLabelByName(labelName);
   
-  Logger.log(`checking for label ${labelName}`);
   if (!label) { // if someone deletes the label in email
     Logger.log(`Label '${labelName}' not found.`);
     return;
   }
 
-  let maxThreads = 10;
-  const threads = label.getThreads(0, maxThreads);
+  const threads = label.getThreads();
   if (threads.length === 0) {
     Logger.log(`No emails found with label '${labelName}'.`);
     return;
   }
-
 
   Logger.log(`Found ${threads.length} threads with label '${labelName}':\n`);
   threads.forEach(thread => {
@@ -32,14 +29,13 @@ function checkAndPrintEmailsWithLabel() {
       }
     });
     label.removeFromThread(thread);
-    Utilities.sleep(200); // prevent ratelimiting
   });
 }
 
 
 function postSmallEmbed() { 
-  notificationWebhookUrl = properties['LIVE_NOTIFICATION_WEBHOOK_URL']
-  // notificationWebhookUrl = properties['TEST_NOTIFICATION_WEBHOOK_URL']
+  // notificationWebhookUrl = properties['LIVE_NOTIFICATION_WEBHOOK_URL']
+  notificationWebhookUrl = properties['TEST_NOTIFICATION_WEBHOOK_URL']
   const options = {
           "method": "post",
           "headers": {

@@ -14,37 +14,25 @@ let embed2 = [];
 
 let options; // text customizations for embed
 
-function postEmbed() { // yeah dont ask me to write clean code lmao
-  if(itemsOrdered > 17) {
-    preparePayload();
-    response = UrlFetchApp.fetch(DISCORD_POST_URL, options); // message 1 of 2
+function postEmbed() { 
+  preparePayload();
+  if(itemsOrdered < 17) { // only post one embed
+    response = UrlFetchApp.fetch(DISCORD_POST_URL, options);
+    Logger.log("one embed response: " + response);
+  }
+  else { // post two embeds
+    response = UrlFetchApp.fetch(DISCORD_POST_URL, options); // message 1/2
+    Logger.log("response 1: " + response);
     Utilities.sleep(1000); // ensure second message gets sent as second message
-    options = { // overwrite options for next message post
-        // "muteHttpExceptions": true,
-        "method": "post",
-        "headers": {
-        "Content-Type": "application/json",
-        },
-      "payload": JSON.stringify({
-      "content": "", // this is the unformatted (normal) text above the rich embed
-      "embeds": [{
-        // "title": `${itemsOrdered} unique links!`,
-        "color": randomColor,
-        "fields": embed2,
-        "footer": {
-          "text": footerText,
-          ...(footerUrl ? { "icon_url": footerUrl } : {})
-        },
-        "timestamp": new Date().toISOString()
-      }]
-    })
-    };    
+
+    // replace embed's field with message 2 contents
+    let payloadObj = JSON.parse(options.payload);
+    payloadObj.embeds[0].fields = embed2; 
+    payloadObj.content = ""; 
+    options.payload = JSON.stringify(payloadObj);
 
     response = UrlFetchApp.fetch(DISCORD_POST_URL, options); // message 2 of 2
-  }
-  else { // one embed in one message only
-    preparePayload();
-    response = UrlFetchApp.fetch(DISCORD_POST_URL, options);
+    Logger.log("response 2: " + response);
   }
 }
 
@@ -161,11 +149,21 @@ function preparePayload() {
 // posts error message to discord
 function postKill(process) { 
   items = []; // clear contents
-  console.log("special error message: " + specialErrorMessage);
+  Logger.log(`
+  postKill JSON debug dump: \n
+  specialErrorMessage: ${specialErrorMessage} \n
+  items: ${items} \n
+  footerText: ${footerText} \n
+  randomColor: ${randomColor} \n
+  DISCORD_POST_URL: ${DISCORD_POST_URL}
+  `);
+
+  Utilities.sleep(3000); 
   const options = {
           "method": "post",
           "headers": {
           "Content-Type": "application/json",
+           "muteHttpExceptions": true
           },
     "payload": JSON.stringify({
     "content": discordTag + "\n" + specialErrorMessage, // this is the unformatted text above the rich embed
@@ -182,8 +180,8 @@ function postKill(process) {
     })
   };
 
-    UrlFetchApp.fetch(DISCORD_POST_URL, options);
-
+    let response = UrlFetchApp.fetch(DISCORD_POST_URL, options);
+    Logger.log("response: " + response);
 
     return;
 }
