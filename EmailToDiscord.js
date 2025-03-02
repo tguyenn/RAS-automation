@@ -34,8 +34,8 @@ function checkAndPrintEmailsWithLabel() {
 
 
 function postSmallEmbed() { 
-  // notificationWebhookUrl = properties['LIVE_NOTIFICATION_WEBHOOK_URL']
-  notificationWebhookUrl = properties['TEST_NOTIFICATION_WEBHOOK_URL']
+  notificationWebhookUrl = properties['LIVE_NOTIFICATION_WEBHOOK_URL']
+  // notificationWebhookUrl = properties['TEST_NOTIFICATION_WEBHOOK_URL']
   const options = {
           "method": "post",
           "headers": {

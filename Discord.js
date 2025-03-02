@@ -3,8 +3,8 @@
  */
 
 
-// const DISCORD_POST_URL = properties['LIVE_DISCORD_WEBHOOK_URL']; // defined in script properties (Script Settings > Scroll to bottom)
-const DISCORD_POST_URL = properties['TEST_DISCORD_WEBHOOK_URL'];
+const DISCORD_POST_URL = properties['LIVE_DISCORD_WEBHOOK_URL']; // defined in script properties (Script Settings > Scroll to bottom)
+// const DISCORD_POST_URL = properties['TEST_DISCORD_WEBHOOK_URL'];
 
 
 const randomColor = Math.floor(Math.random() * 0xFFFFFF);
@@ -18,11 +18,11 @@ function postEmbed() {
   preparePayload();
   if(itemsOrdered < 17) { // only post one embed
     response = UrlFetchApp.fetch(DISCORD_POST_URL, options);
-    Logger.log("one embed response: " + response);
+    // Logger.log("one embed response: " + response);
   }
   else { // post two embeds
     response = UrlFetchApp.fetch(DISCORD_POST_URL, options); // message 1/2
-    Logger.log("response 1: " + response);
+    // Logger.log("response 1: " + response);
     Utilities.sleep(1000); // ensure second message gets sent as second message
 
     // replace embed's field with message 2 contents
@@ -32,7 +32,7 @@ function postEmbed() {
     options.payload = JSON.stringify(payloadObj);
 
     response = UrlFetchApp.fetch(DISCORD_POST_URL, options); // message 2 of 2
-    Logger.log("response 2: " + response);
+    // Logger.log("response 2: " + response);
   }
 }
 
@@ -180,8 +180,8 @@ function postKill(process) {
     })
   };
 
-    let response = UrlFetchApp.fetch(DISCORD_POST_URL, options);
-    Logger.log("response: " + response);
+    let response = UrlFetchApp.fetch(DISCORD_POST_URL, options); 
+    // Logger.log("response: " + response);
 
     return;
 }
