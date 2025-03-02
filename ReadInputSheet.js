@@ -36,14 +36,16 @@ function readSheet() {
     }
   }
 
-  let miscData = sheet.getRange('H3:H7').getValues(); // put data from table on right into an array
-  miscData = miscData.map(row => row[0]); // flatten to 1D array
-
-  committeeName = miscData[0];
-  vendorName = miscData[1];
-  shippingType = miscData[2];
-  shipping = miscData[3];
-  specialNotes = miscData[4] + "\n";
+  let sheetData = sheet.getRange('H3:H9').getValues(); // put data from table on right into an array
+  sheetData = sheetData.map(row => row[0]); // flatten to 1D array
+  committeeName = sheetData[0];
+  vendorName = sheetData[1];
+  shippingType = sheetData[2];
+  shipping = sheetData[3];
+  specialNotes = sheetData[4] + "\n";
+  fundingSource = sheetData[5];
+  let isClear = sheetData[6];
+  // Logger.log("sheet data: " + sheetData);
 
   itemsOrdered = lastRow - 1;
 
@@ -70,57 +72,76 @@ function readSheet() {
       specialErrorMessage = "someone forgot to put the committee lol"
   }
 
-  if(vendorName == "Amazon" || vendorName == "amazon" || vendorName == "AMZN" || vendorName == "AMAZON") {
-    isAmazon = true;
+  if(vendorName == "") {
+    specialNotes += "Someone forgot to put the vendor 😔\n";
   }
 
-  if(email == "") {
-    email = "N/A";
-  }
+  for(i = 0; i < itemsOrdered; i++) {
+    if(quantityArr[i] == 0) {
+      specialNotes += "\nSomoene forgot to put quantity🫵🫵🤣🤣🤣 defaulted it to 1"; 
+      quantityArr[i] = 1;
+    }
+  }  
 
   if(shippingType == "") {
     shippingType = "N/A";
   }
 
-  if(vendorName == "") {
-    specialNotes += "Someone forgot to put the vendor 😔\n";
-  }
-
-
-  for(i = 0; i < itemsOrdered; i++) {
-    if(quantityArr[i] == 0) {
-      specialNotes += "\nSomoene forgot to put quantity point and laugh 🫵🫵🤣🤣🤣 defaulted to 1"; 
-      quantityArr[i] = 1;
-    }
-  }  
-
   if(shipping == "") { // prevent empty shipping from breaking total price calculation
     shipping = 0;
+  }
+
+  if(fundingSource == "") {
+    specialNotes += "\nSomeone forgot to put the funding source ☹️☹️ defaulted to ESL committee funds";
+    fundingSource = "ESL Committee Funds";
+  }
+
+  if(specialNotes == "") {
+    specialNotes = "N/A";
+  }
+
+  if(vendorName == "Amazon" || vendorName == "amazon" || vendorName == "AMZN" || vendorName == "AMAZON") {
+    isAmazon = true;
   }
 
   for(let i = 0; i < itemsOrdered; i++) {
     totalPrice += (parseFloat(priceArr[i]) * parseInt(quantityArr[i]));
   }
   totalPrice += parseFloat(shipping);
+  totalPrice = parseFloat(totalPrice.toFixed(2)); // prevent weird decimals
 
   if (totalPrice > 1500) { // "easter egg" or wtv
-    footerUrl = "https://i.imgur.com/1kqpus1.jpg"
-    footerText = "holy shit we cant afford this"
+    footerUrl = "https://i.imgur.com/1kqpus1.jpg";
+    footerText = ":( stop please we are too poor for this";
   }
 
   if (Math.random() > 0.95 && Math.random() > 0.95) { // more easter egg yay yipee
     thumbNailUrl = "https://www.crownbio.com/hubfs/ras-signaling-pathways-thumb.jpg";
   }
 
-  if(specialNotes == "") {
-    specialNotes = "N/A";
+  if(isClear == true) {
+    // Logger.log("clearing input sheet!");
+    clearSheet(); // clear sheet for next use
   }
-  // clearSheet(lastRow, sheet); // clear sheet for next use
 }
 
 // delete data from template sheet
-function clearSheet(lastRow, sheet) {
+function clearSheet() {
+
+  // tbh idk why it wasnt working earlier when passing in sheetID and lastRow in and idc enough to debug :) so this is what u get for now
+  inputSheetID = "1Ud5ZEs9mdV4Lk5InK7P9jcXaRlwkBsqSURoN1luDPls";
+  const spreadsheet = SpreadsheetApp.openById(inputSheetID);
+  const sheet = spreadsheet.getSheetByName("Sheet1"); 
+  let lastRow = sheet.getRange("A1:A").getValues(); // read to end of col A
+  lastRow = lastRow.filter(String).length;
+
+  Logger.log("lastRow: " + lastRow);
+
   let range = sheet.getRange(2, 1, lastRow, 5); 
   range.clearContent(); // clear main data
-  sheet.getRange('H3:H9').clearContent(); // clear 
+  sheet.getRange('H3:H8').clearContent(); // clear Other Information table
+
+
+  sheet.getRange('H8').setValue("ESL Committee Funds"); // default
+
 }

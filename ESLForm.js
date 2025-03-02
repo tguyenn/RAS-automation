@@ -44,7 +44,10 @@ function replaceForm() {
 
   eslLinkRes = eslLinkRes.replace("description", descRes); // fill this in manually in form
   eslLinkRes = eslLinkRes.replace("reasonforrequest", reasonRes); // fill this in manually in form 
-  eslLinkRes = encodeURIComponent(eslLinkRes); 
+  // eslLinkRes = encodeURIComponent(eslLinkRes); // idk why but the link exploded for some reason. dont care enough to investigate when we alr have working solution below lol
+  eslLinkRes = eslLinkRes.replace(/ /g, "%20"); // replace ALL spaces with %20   
+  eslLinkRes = eslLinkRes.replace(/,/g, "%2C"); // replace ALL commas with %2C
+  eslLinkRes = eslLinkRes.replace(/[\*\(\)\r\n]+/g, ''); 
 
 
   return eslLinkRes;

@@ -10,6 +10,7 @@ let newSheetUrl = "";
 let inputSheetID = "";
 let email = "N/A"; // for notification to form submitter
 let committeeName = "";
+let fundingSource = "";
 let vendorName = "";
 let specialNotes = "N/A";
 let shippingType = "N/A";
