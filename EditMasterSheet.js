@@ -134,7 +134,6 @@ function editGrants(spreadsheet) {
       break;
     }
   }
-
   Logger.log(values);
   Logger.log("upperbound " + upperBound);
   let subArr = values.slice(0, upperBound);

@@ -44,7 +44,7 @@ function readSheet() {
   shipping = sheetData[3];
   specialNotes = sheetData[4] + "\n";
   fundingSource = sheetData[5];
-  let isClear = sheetData[6];
+  let needsClear = sheetData[6];
   // Logger.log("sheet data: " + sheetData);
 
   itemsOrdered = lastRow - 1;
@@ -69,17 +69,22 @@ function readSheet() {
       thumbNailUrl = "https://i.imgur.com/XHbsPvd.jpg";
       break;
     default: // if someone forgets to put the committee then the script explodes
-      specialErrorMessage = "someone forgot to put the committee lol"
+      specialErrorMessage = "Someone forgot to put the committee lol"
+      postKill("Execution aborted bc someone forgor to put the committee");
+      throw new Error("Execution aborted bc someone forgor to put the committee");
   }
 
   if(vendorName == "") {
-    specialNotes += "Someone forgot to put the vendor 😔\n";
+    specialErrorMessage += "Someone forgot to put the vendor 😔\n";
+    postKill("Execution aborted bc someone forgor to put the vendor");
+    throw new Error("Execution aborted bc someone forgor to put the vendor");
   }
 
   for(i = 0; i < itemsOrdered; i++) {
     if(quantityArr[i] == 0) {
-      specialNotes += "\nSomoene forgot to put quantity🫵🫵🤣🤣🤣 defaulted it to 1"; 
-      quantityArr[i] = 1;
+      specialErrorMessage += "\nSomoene forgot to put quantity🫵🫵🤣🤣🤣 defaulted it to 1"; 
+      postKill("Execution aborted bc someone forgor to put a quantity for an item");
+      throw new Error("Execution aborted bc someone forgor to put a quantity for an item");
     }
   }  
 
@@ -92,8 +97,12 @@ function readSheet() {
   }
 
   if(fundingSource == "") {
-    specialNotes += "\nSomeone forgot to put the funding source ☹️☹️ defaulted to ESL committee funds";
+    specialErrorMessage += "\nSomeone forgot to put the funding source ☹️☹️ defaulted to ESL committee funds";
     fundingSource = "ESL Committee Funds";
+  }
+  
+  if((fundingSource !== "ESL Committee Funds") && (fundingSource !== "HCB Committee Funds")) {
+    specialNotes += `This order should use funds from ${fundingSource} grant`;
   }
 
   if(specialNotes == "") {
@@ -110,16 +119,16 @@ function readSheet() {
   totalPrice += parseFloat(shipping);
   totalPrice = parseFloat(totalPrice.toFixed(2)); // prevent weird decimals
 
-  if (totalPrice > 1500) { // "easter egg" or wtv
+  if (totalPrice > 1500) { 
     footerUrl = "https://i.imgur.com/1kqpus1.jpg";
     footerText = ":( stop please we are too poor for this";
   }
 
-  if (Math.random() > 0.95 && Math.random() > 0.95) { // more easter egg yay yipee
+  if (Math.random() > 0.95 && Math.random() > 0.95) { 
     thumbNailUrl = "https://www.crownbio.com/hubfs/ras-signaling-pathways-thumb.jpg";
   }
 
-  if(isClear == true) {
+  if(needsClear == true) {
     // Logger.log("clearing input sheet!");
     clearSheet(); // clear sheet for next use
   }

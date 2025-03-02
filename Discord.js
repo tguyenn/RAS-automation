@@ -61,7 +61,7 @@ function preparePayload() {
     embed1 = [
         { "name": "Committee", "value": committeeName, "inline": false },
         { "name": "Special Notes", "value": specialNotes, "inline": false },
-        // { "name": "Contact", "value": email, "inline": false },
+        { "name": "Funding Source", "value": fundingSource, "inline": false },
         { "name": "Vendor", "value": vendorName, "inline": false },
         { "name": "Shipping", "value": `$${parseFloat(shipping).toFixed(2)}`, "inline": false},
         { "name": "Shipping Type", "value": shippingType, "inline": false },
@@ -108,7 +108,7 @@ function preparePayload() {
     items = [
         { "name": "Committee", "value": committeeName, "inline": false },
         { "name": "Special Notes", "value": specialNotes, "inline": false },
-        // { "name": "Contact", "value": email, "inline": false },
+        { "name": "Funding Source", "value": fundingSource, "inline": false },
         { "name": "Vendor", "value": vendorName, "inline": false },
         { "name": "Shipping", "value": `$${parseFloat(shipping).toFixed(2)}`, "inline": false},
         { "name": "Shipping Type", "value": shippingType, "inline": false },
@@ -158,7 +158,7 @@ function postKill(process) {
   DISCORD_POST_URL: ${DISCORD_POST_URL}
   `);
 
-  Utilities.sleep(3000); 
+  Utilities.sleep(1000); 
   const options = {
           "method": "post",
           "headers": {

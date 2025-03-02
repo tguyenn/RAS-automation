@@ -1,14 +1,14 @@
 // GLOBAL VARIABLES
 let amazonBuyerName = "Annie Vu"; // for Amazon ESL form
 let amazonBuyerDiscordTag = "<@365619835939455005>"; // Annie Vu 
-// let discordTag = "<@533956992272695297>" ; // default ping recipient
-let discordTag = "init discord tag here" ; // ping nobody
+let discordTag = "<@533956992272695297>" ; // default ping recipient
+// let discordTag = "init discord tag here" ; // ping nobody
 let thumbNailUrl = "https://i.imgur.com/jvF3FoH.jpg";  // default
 let footerUrl = ""; // required for Discord embed's footer
 let footerText = ""; // bottom text of embed
 let newSheetUrl = "";
 let inputSheetID = "";
-let email = "N/A"; // for notification to form submitter
+let email = "N/A"; // for notification to form submitter. NO LONGER IN USE not gona delete for now bc might break smth and idc enough to go hunting for email references
 let committeeName = "";
 let fundingSource = "";
 let vendorName = "";
@@ -30,9 +30,6 @@ let descriptionArr = [];
 
 const properties = PropertiesService.getScriptProperties().getProperties(); // loads properties map with values defined in project properties (Settings > scroll down)
 
-
-
-// note: there is no particular order to this --- the only order that matters is that parseForm() and readSheet() are placed first and second respectively
 function mainOnSubmit(e) {
   
   try{
