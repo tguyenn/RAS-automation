@@ -36,7 +36,7 @@ function readSheet() {
     }
   }
 
-  let sheetData = sheet.getRange('H3:H9').getValues(); // put data from table on right into an array
+  let sheetData = sheet.getRange('H3:H10').getValues(); // put data from table on right into an array
   sheetData = sheetData.map(row => row[0]); // flatten to 1D array
   committeeName = sheetData[0];
   vendorName = sheetData[1];
@@ -45,6 +45,7 @@ function readSheet() {
   specialNotes = sheetData[4] + "\n";
   fundingSource = sheetData[5];
   let needsClear = sheetData[6];
+  isPosting = sheetData[7];
   // Logger.log("sheet data: " + sheetData);
 
   itemsOrdered = lastRow - 1;

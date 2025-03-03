@@ -110,7 +110,7 @@ function editGrants(spreadsheet) {
     let itemTotalPrice = quantityArr[i] * priceArr[i];
 
     // append all data in order starting with Product Name column in the sheet
-    let newData = [formattedDate, committeeName, nameArr[i], itemTotalPrice];
+    let newData = [formattedDate, committeeName, nameArr[i], itemTotalPrice, vendorName];
           // let newData = [formattedDate, committeeName, i, i];
     sheet.getRange(targetRow, 2, 1, newData.length).setValues([newData]);
     targetRow++;
@@ -158,7 +158,8 @@ function editGrants(spreadsheet) {
   if(grantTitleRow == 0) {
     Logger.log("Could not find grantNameRow");
     specialErrorMessage += "\nCould not find grantNameRow\n"
-    return;
+    postKill("Execution aborted bc could not find grant row");
+    throw new Error(":(");
   }
   // write to summary table
   sheet.getRange(grantNameRow, 3).setValue(costSum);

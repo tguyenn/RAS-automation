@@ -25,7 +25,7 @@ function checkAndPrintEmailsWithLabel() {
     messages.forEach((message) => {
       if(message.getPlainBody().includes("package(s)")) {
         console.log("found package email");
-        postSmallEmbed();
+        postSmallEmbed("Package Received in ESL Office (EER 2.848)");
       }
     });
     label.removeFromThread(thread);
@@ -33,7 +33,8 @@ function checkAndPrintEmailsWithLabel() {
 }
 
 
-function postSmallEmbed() { 
+// yeah this is gona be called by other things cry about it
+function postSmallEmbed(message) { 
   notificationWebhookUrl = properties['LIVE_NOTIFICATION_WEBHOOK_URL']
   // notificationWebhookUrl = properties['TEST_NOTIFICATION_WEBHOOK_URL']
   const options = {
@@ -44,7 +45,7 @@ function postSmallEmbed() {
     "payload": JSON.stringify({
     "content": "", // this is the unformatted text above the rich embed
     "embeds": [{
-      "title": `Package Received in ESL Office (EER 2.848)`,
+      "title": `${message}`,
       "color": randomColor,
       "fields": [],
       "timestamp": new Date().toISOString()
@@ -53,7 +54,5 @@ function postSmallEmbed() {
   };
 
     UrlFetchApp.fetch(notificationWebhookUrl, options);
-
-
     return;
 }

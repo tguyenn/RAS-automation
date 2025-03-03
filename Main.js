@@ -17,6 +17,7 @@ let shippingType = "N/A";
 let itemsOrdered = 0;
 let shipping = 0;
 let totalPrice = 0;
+let isPosting = false; // boolean flag to determine if should post to Discord
 let isAmazon = false;
 let hasSpreadsheet = false; // if user submits spreadsheet
 let eslLinkRes = "";
@@ -104,7 +105,12 @@ function mainOnSubmit(e) {
   }
 
   try{
-    postEmbed();
+    if(isPosting) { // checkbox toggle in input order sheet
+      postEmbed();
+    }
+    else { // feedback for non-purchase logging
+      postSmallEmbed(`Successfully wrote ${itemsOrdered} items from ${vendorName} to ${committeeName}'s sheets for ${fundingSource}!`)
+    }
   } catch(e) {
     let stack = e.stack.split("\n");
     let lineInfo = stack.length > 1 ? stack[1] : "No line info";
