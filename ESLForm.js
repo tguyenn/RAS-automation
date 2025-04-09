@@ -43,12 +43,12 @@ function replaceForm() {
   eslLinkRes = eslLinkRes.replace("email", "ut.ieee.ras@gmail.com"); // hardcode email to main ras account
   eslLinkRes = eslLinkRes.replace("date", formattedDate);
 
-  //Existing Code
   if (specialNotes.trim() === "") {
         specialNotes = "N/A";
-    } else {
+  } 
+  else {
         specialNotes = specialNotes.replace(/%/g, " percent"); // Replace % with "percent"
-    }
+  }
 
   eslLinkRes = eslLinkRes.replace("specialNotes", specialNotes);
   eslLinkRes = eslLinkRes.replace("description", descRes); // fill this in manually in form

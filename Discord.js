@@ -39,6 +39,11 @@ function postEmbed() {
 function preparePayload() {
   let payloadContentString = "";
   payloadContentString = "\n[Prefilled ESL Form](" + eslLinkRes + ")\n";
+
+  if(fundingSource != "HCB Committee Funds") {
+    payloadContentString == "";
+  }
+
   if(isAmazon) {
     payloadContentString = payloadContentString + "[Generated Amazon Cart](" + amazonLink + ")";
   }
