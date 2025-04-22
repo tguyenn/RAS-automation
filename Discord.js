@@ -3,11 +3,12 @@
  */
 
 
-const DISCORD_POST_URL = properties['LIVE_DISCORD_WEBHOOK_URL']; // defined in script properties (Script Settings > Scroll to bottom)
+let ipaddress = "13.59.233.128"; 
+const DISCORD_POST_URL = `http://${ipaddress}:3000/send-message`;
+
+// const DISCORD_POST_URL = properties['LIVE_DISCORD_WEBHOOK_URL']; // defined in script properties (Script Settings > Scroll to bottom)
 // const DISCORD_POST_URL = properties['TEST_DISCORD_WEBHOOK_URL'];
 
-
-const randomColor = Math.floor(Math.random() * 0xFFFFFF);
 let items = []; // not actual purchased items, this is filled with fields that get published in discord embed <- tbh i think this is used elsewhere but im not paid enough to clean up
 let embed1 = [];
 let embed2 = [];
@@ -15,6 +16,9 @@ let embed2 = [];
 let options; // text customizations for embed
 
 function postEmbed() { 
+
+  footerText = `${orderID}`; // test
+
   preparePayload();
   if(itemsOrdered < 17) { // only post one embed
     response = UrlFetchApp.fetch(DISCORD_POST_URL, options);

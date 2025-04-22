@@ -5,6 +5,7 @@
 
 function readSheet() {
 
+  let inputSheetID = "1Ud5ZEs9mdV4Lk5InK7P9jcXaRlwkBsqSURoN1luDPls";
   const spreadsheet = SpreadsheetApp.openById(inputSheetID); // open arbitrary template sheet 
   const sheet = spreadsheet.getSheetByName("Sheet1"); 
 
@@ -120,12 +121,12 @@ function readSheet() {
   totalPrice += parseFloat(shipping);
   totalPrice = parseFloat(totalPrice.toFixed(2)); // prevent weird decimals
 
-  if (totalPrice > 1500) { 
+  if(totalPrice > 1500) { 
     footerUrl = "https://i.imgur.com/1kqpus1.jpg";
     footerText = ":( stop please we are too poor for this";
   }
 
-  if (Math.random() > 0.95 && Math.random() > 0.95) { 
+  if(Math.random() > 0.95 && Math.random() > 0.95) { 
     thumbNailUrl = "https://www.crownbio.com/hubfs/ras-signaling-pathways-thumb.jpg";
   }
 
@@ -135,7 +136,7 @@ function readSheet() {
   }
 }
 
-// delete data from template sheet
+// delete data from sheet
 function clearSheet() {
 
   // tbh idk why it wasnt working earlier when passing in sheetID and lastRow in and idc enough to debug :) so this is what u get for now

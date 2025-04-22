@@ -7,7 +7,6 @@ let thumbNailUrl = "https://i.imgur.com/jvF3FoH.jpg";  // default
 let footerUrl = ""; // required for Discord embed's footer
 let footerText = ""; // bottom text of embed
 let newSheetUrl = "";
-let inputSheetID = "";
 let email = "N/A"; // for notification to form submitter. NO LONGER IN USE not gona delete for now bc might break smth and idc enough to go hunting for email references
 let committeeName = "";
 let fundingSource = "";
@@ -28,33 +27,22 @@ let quantityArr = [];
 let linksArr = [];
 let priceArr = [];
 let descriptionArr = [];
+const randomColor = Math.floor(Math.random() * 0xFFFFFF);
+const orderID = randomColor;
 
 const properties = PropertiesService.getScriptProperties().getProperties(); // loads properties map with values defined in project properties (Settings > scroll down)
 
 function mainOnSubmit(e) {
-  
-  try{
-    parseForm(e);
+
+  try {
+    readSheet();
   } catch(e) {
     let stack = e.stack.split("\n");
     let lineInfo = stack.length > 1 ? stack[1] : "No line info";
-    Logger.log("Error in parseForm(): " + e.message);
+    Logger.log("Error in readSheet(): " + e.message);
     Logger.log("Occurred at: " + lineInfo);
-    postKill("Error processing parseForm() with " + e);
+    postKill("Error processing readSheet() with " + e);
     return;
-  }
-  
-  if(hasSpreadsheet) {
-    try {
-      readSheet();
-    } catch(e) {
-      let stack = e.stack.split("\n");
-      let lineInfo = stack.length > 1 ? stack[1] : "No line info";
-      Logger.log("Error in readSheet(): " + e.message);
-      Logger.log("Occurred at: " + lineInfo);
-      postKill("Error processing readSheet() with " + e);
-      return;
-    }
   }
 
   try{
