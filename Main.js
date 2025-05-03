@@ -2,7 +2,7 @@
 let amazonBuyerName = "Annie Vu"; // for Amazon ESL form
 let amazonBuyerDiscordTag = "<@365619835939455005>"; // Annie Vu 
 let discordTag = "<@533956992272695297>" ; // default ping recipient
-// let discordTag = "init discord tag here" ; // ping nobody
+// let discordTag = "test discord tag" ; // ping nobody
 let thumbNailUrl = "https://i.imgur.com/jvF3FoH.jpg";  // default
 let footerUrl = ""; // required for Discord embed's footer
 let footerText = ""; // bottom text of embed
@@ -32,39 +32,37 @@ const orderID = randomColor;
 
 const properties = PropertiesService.getScriptProperties().getProperties(); // loads properties map with values defined in project properties (Settings > scroll down)
 
+function handleError(e, failName) {
+    let stack = e.stack.split("\n");
+    let lineInfo = stack.length > 1 ? stack[1] : "No line info";
+    Logger.log(`Error in ${failName}` + e.message);
+    Logger.log("Occurred at: " + lineInfo);
+    postKill(`Error processing ${failName} with ${e}`);
+    return;
+}
+
+
 function mainOnSubmit(e) {
 
   try {
     readSheet();
   } catch(e) {
-    let stack = e.stack.split("\n");
-    let lineInfo = stack.length > 1 ? stack[1] : "No line info";
-    Logger.log("Error in readSheet(): " + e.message);
-    Logger.log("Occurred at: " + lineInfo);
-    postKill("Error processing readSheet() with " + e);
+    handleError(e, "readSheet()");
     return;
   }
 
   try{
     eslLinkRes = getESLForm();
   } catch(e) {
-    let stack = e.stack.split("\n");
-    let lineInfo = stack.length > 1 ? stack[1] : "No line info";
-    Logger.log("Error in getESLForm(): " + e.message);
-    Logger.log("Occurred at: " + lineInfo);
-    postKill("Error processing getESLForm() with " + e);
+    handleError(e, "getESLForm()");
     return;
   }
 
   if(!isAmazon) {
     try {
-      getSheet(); 
+      getSheet();  // makes formatted sheet for ESL submission
     } catch(e) {
-      let stack = e.stack.split("\n");
-      let lineInfo = stack.length > 1 ? stack[1] : "No line info";
-      Logger.log("Error in getSheet(): " + e.message);
-      Logger.log("Occurred at: " + lineInfo);
-      postKill("Error processing getSheet() with " + e);
+      handleError(e, "getSheet()");
       return;
     }
   } else {
@@ -72,11 +70,7 @@ function mainOnSubmit(e) {
       discordTag = amazonBuyerDiscordTag;
       generateAmazonLink();
     } catch(e) {
-      let stack = e.stack.split("\n");
-      let lineInfo = stack.length > 1 ? stack[1] : "No line info";
-      Logger.log("Error in generateAmazonLink(): " + e.message);
-      Logger.log("Occurred at: " + lineInfo);
-      postKill("Error processing generateAmazonLink() with " + e);
+      handleError(e, "generateAmazonLink()");
       return;
     }
   }
@@ -84,11 +78,7 @@ function mainOnSubmit(e) {
   try {
     editMasterSheet();
   } catch(e) {
-    let stack = e.stack.split("\n");
-    let lineInfo = stack.length > 1 ? stack[1] : "No line info";
-    Logger.log("Error in editMasterSheet(): " + e.message);
-    Logger.log("Occurred at: " + lineInfo);
-    postKill("Error processing editMasterSheet() with " + e);
+    handleError(e, "editMasterSheet()");
     return;
   }
 
@@ -100,12 +90,7 @@ function mainOnSubmit(e) {
       postSmallEmbed(`Successfully wrote ${itemsOrdered} items from ${vendorName} to ${committeeName}'s sheets for ${fundingSource}!`)
     }
   } catch(e) {
-    let stack = e.stack.split("\n");
-    let lineInfo = stack.length > 1 ? stack[1] : "No line info";
-    Logger.log("Error in postEmbed(): " + e.message);
-    Logger.log("Occurred at: " + lineInfo);
-    postKill("Error processing postEmbed() with " + e);
+    handleError(e, "postEmbed()");
     return;
   }
-
 }

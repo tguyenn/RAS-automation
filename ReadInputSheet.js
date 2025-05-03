@@ -53,7 +53,7 @@ function readSheet() {
 
   switch(committeeName) {
     case "General":
-      // nothing
+      // use default val. tbh would be cleaner to just move that here
       break;
     case "VEXU":
       thumbNailUrl = "https://i.imgur.com/2vwgZHO.jpg";
@@ -71,22 +71,20 @@ function readSheet() {
       thumbNailUrl = "https://i.imgur.com/XHbsPvd.jpg";
       break;
     default: // if someone forgets to put the committee then the script explodes
-      specialErrorMessage = "Someone forgot to put the committee lol"
-      postKill("Execution aborted bc someone forgor to put the committee");
+      specialErrorMessage = "Someone forgot to put the committee 🤷"
       throw new Error("Execution aborted bc someone forgor to put the committee");
   }
 
   if(vendorName == "") {
     specialErrorMessage += "Someone forgot to put the vendor 😔\n";
-    postKill("Execution aborted bc someone forgor to put the vendor");
     throw new Error("Execution aborted bc someone forgor to put the vendor");
   }
 
   for(i = 0; i < itemsOrdered; i++) {
     if(quantityArr[i] == 0) {
-      specialErrorMessage += "\nSomoene forgot to put quantity🫵🫵🤣🤣🤣 defaulted it to 1"; 
-      postKill("Execution aborted bc someone forgor to put a quantity for an item");
-      throw new Error("Execution aborted bc someone forgor to put a quantity for an item");
+      specialErrorMessage += `\nSomoene forgot to put quantity for ${nameArr[i]} 😢 defaulted it to 1`;
+      quantityArr[i] = "1"; 
+      // throw new Error("Execution aborted bc someone forgor to put a quantity for an item");
     }
   }  
 
@@ -120,15 +118,6 @@ function readSheet() {
   }
   totalPrice += parseFloat(shipping);
   totalPrice = parseFloat(totalPrice.toFixed(2)); // prevent weird decimals
-
-  if(totalPrice > 1500) { 
-    footerUrl = "https://i.imgur.com/1kqpus1.jpg";
-    footerText = ":( stop please we are too poor for this";
-  }
-
-  if(Math.random() > 0.95 && Math.random() > 0.95) { 
-    thumbNailUrl = "https://www.crownbio.com/hubfs/ras-signaling-pathways-thumb.jpg";
-  }
 
   if(needsClear == true) {
     // Logger.log("clearing input sheet!");
