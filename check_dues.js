@@ -1,3 +1,5 @@
+// NOT TIED TO OTHER SCRIPT FILES
+
 // Keep track of last submitted donation by saving the last read ID. Use this as a landmark to see which donations are new
 // post thing to Discord 
 

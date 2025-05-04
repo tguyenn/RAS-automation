@@ -19,6 +19,7 @@ let descriptionArr = [];
 let amazonLink = "";
 let eslLink = "";
 let newSheetUrl = "";
+let newOOEFLink = "";
 let specialErrorMessage = ""; // normal message text outside (at top) of embed 
 
 let amazonBuyerName = "Annie Vu"; // for Amazon ESL form
@@ -66,15 +67,15 @@ function mainOnSubmit(event) {
       console.log("materials");
       readNormalSheet();
     }
+    else if(mode === "food") {
+      //TODO need to figure out what exactly needs to be done for this kind of form
+      console.log("food");
+    }
     else if(mode === "config") {
       console.log("config");
       readConfigSheet();
       updateConfig();
       return; // stop processing after updating config throughout system
-    }
-    else if(mode === "food") {
-      //TODO need to figure out what exactly needs to be done for this kind of form
-      console.log("food");
     }
   } catch(e) {
     handleError(e, "readSheet()");
@@ -113,7 +114,7 @@ function mainOnSubmit(event) {
   }
 
   try{
-    if(isPosting) { // checkbox toggle in input order sheet
+    if(isPosting) { // this signal is a checkbox toggle in the input order sheet
       postEmbed();
     }
     else { // feedback for non-purchase logging

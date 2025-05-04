@@ -1,3 +1,5 @@
+// NOT TIED TO OTHER SCRIPT FILES
+
 // expose this as an endpoint (deploy as web app) so discord bot can tell script to mark appropriate order group as placed
 
 function doPost(event) {
@@ -18,8 +20,6 @@ function markChecks(numItems, tag, committeeName) {
     Logger.log("opening sheet of: " + committeeName);
     const sheet = spreadsheet.getSheetByName(committeeName); 
     const columnO = sheet.getRange('O:O').getValues(); // Get all tag values in column O
-
-    // const arr = Array(numItems).fill("TRUE");
 
     for (let i = 0; i < columnO.length; i++) {
         if (columnO[i][0] == tag) {

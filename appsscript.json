@@ -7,6 +7,13 @@
         "serviceId": "drive",
         "version": "v3"
       }
+    ],
+    "libraries": [
+      {
+        "userSymbol": "PDFApp",
+        "version": "8",
+        "libraryId": "1Xmtr5XXEakVql7N6FqwdCNdpdijsJOxgqH173JSB0UOwdb0GJYJbnJLk"
+      }
     ]
   },
   "webapp": {
@@ -21,7 +28,10 @@
     "https://www.googleapis.com/auth/forms",
     "https://www.googleapis.com/auth/forms.currentonly",
     "https://www.googleapis.com/auth/script.external_request",
-    "https://mail.google.com/"
+    "https://mail.google.com/",
+    "https://www.googleapis.com/auth/script.external_request",
+    "https://www.googleapis.com/auth/drive",
+    "https://www.googleapis.com/auth/presentations"
   ],
   "runtimeVersion": "V8"
 }

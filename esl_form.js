@@ -24,7 +24,6 @@ function replaceForm() {
   let descRes = "";
   descRes = testGemini(prompt);
 
-  //Experimental Code
   let reasonRes = committeeName === "General" 
     ? "General materials for org" 
     : "Materials for " + committeeName + " committee project";
