@@ -16,20 +16,37 @@ function editMasterSheet() {
   const today = new Date();
   const formattedDate = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
 
-  let originalTargetRow = targetRow;
-  for(i = 0; i < itemsOrdered; i++) {
-    let itemTotalPrice = "=PRODUCT(J" + targetRow + "," + " K" + targetRow + ") + L" + targetRow;
+  let allData = [];
+  let dateValues = [];
 
-    // append all data in order starting with Product Name column in the sheet
-    let newData = [nameArr[i], descriptionArr[i], vendorName, linksArr[i], quantityArr[i], priceArr[i], 0, itemTotalPrice, fundingSource, orderID]; // 0 is for shipping
-    sheet.getRange(targetRow, 6, 1, newData.length).setValues([newData]);
-    // set date in column A
-    sheet.getRange(targetRow, 1).setValue(formattedDate); 
+  for (let i = 0; i < itemsOrdered; i++) {
+    let row = targetRow + i;
+    let itemTotalFormula = `=PRODUCT(J${row}, K${row}) + L${row}`;
+    
+    let newData = [
+      nameArr[i],          // Column F
+      descriptionArr[i],   // G
+      vendorName,          // H
+      linksArr[i],         // I
+      quantityArr[i],      // J
+      priceArr[i],         // K
+      0,                   // L (Shipping)
+      itemTotalFormula,    // M (Total)
+      fundingSource,       // N
+      orderID              // O
+    ];
 
-    targetRow++;
-  }
+    if(i == 0) {
+      newData[6] = shipping; // first row should have shipping applied
+    }
+    
+    allData.push(newData);
+    dateValues.push([formattedDate]); // For column A
+  } 
 
-    sheet.getRange(originalTargetRow, 12, 1).setValue(shipping); //overwrite 0 for shipping in first newly written row
+  // Set all all dates (column A) and all row data at once (columns F to O)
+  sheet.getRange(targetRow, 1, itemsOrdered, 1).setValues(dateValues);
+  sheet.getRange(targetRow, 6, itemsOrdered, allData[0].length).setValues(allData);
 
   if(fundingSource != "ESL Committee Funds") { 
     editGrants(spreadsheet);
@@ -41,19 +58,30 @@ function editGrants(spreadsheet) {
 
 // Date	Grant	Committee	Item Total	Vendor
   let targetRow = sheet.getLastRow() + 1;
-  let savedTargetRow = targetRow;
   const today = new Date();
   const formattedDate = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
-  for(i = 0; i < itemsOrdered; i++) {
-    let itemTotalPrice = quantityArr[i] * priceArr[i];
 
-    let newData = [formattedDate, fundingSource, committeeName, nameArr[i], itemTotalPrice, vendorName];
-    sheet.getRange(targetRow, 1, 1, newData.length).setValues([newData]);
-    targetRow++;
+  let allData = [];
+
+  for (let i = 0; i < itemsOrdered; i++) {
+    let itemTotalPrice = quantityArr[i] * priceArr[i];
+    let newData = [
+      formattedDate,     // Column A
+      fundingSource,     // B
+      committeeName,     // C
+      nameArr[i],        // D
+      itemTotalPrice,    // E
+      vendorName         // F
+    ];
+
+    if(i == 0) { // apply shipping to first item
+      newData[4] += shipping;
+      console.log("item total price with shipping: " + itemTotalPrice);
+    }
+
+    allData.push(newData);
   }
-  let buf = sheet.getRange(savedTargetRow, 5).getValue();  // Get single value
-  buf = parseFloat(buf);  // Parse as float
-  buf += shipping;  // Add shipping
-  buf = parseFloat(buf.toFixed(2));  // Round to 2 decimal places
-  sheet.getRange(savedTargetRow, 5).setValue(buf);  // Set single value
+
+  // Set all rows in one call (columns A to F)
+  sheet.getRange(targetRow, 1, itemsOrdered, allData[0].length).setValues(allData);
 }

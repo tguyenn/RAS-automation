@@ -1,36 +1,46 @@
 // GLOBAL VARIABLES
-let amazonBuyerName = "Annie Vu"; // for Amazon ESL form
-let amazonBuyerDiscordTag = "<@365619835939455005>"; // Annie Vu 
-let discordTag = "<@533956992272695297>" ; // default ping recipient
-// let discordTag = "test discord tag" ; // ping nobody
-let thumbNailUrl = "https://i.imgur.com/jvF3FoH.jpg";  // default
-let footerUrl = ""; // required for Discord embed's footer
-let footerText = ""; // bottom text of embed
-let newSheetUrl = "";
-let email = "N/A"; // for notification to form submitter. NO LONGER IN USE not gona delete for now bc might break smth and idc enough to go hunting for email references
-let committeeName = "";
+
+// form data
 let fundingSource = "";
+let committeeName = "";
 let vendorName = "";
 let specialNotes = "N/A";
-let shippingType = "N/A";
 let itemsOrdered = 0;
 let shipping = 0;
+let shippingType = "N/A";
 let totalPrice = 0;
-let isPosting = false; // boolean flag to determine if should post to Discord
-let isAmazon = false;
-let hasSpreadsheet = false; // if user submits spreadsheet
-let eslLinkRes = "";
-let amazonLink = "";
-let specialErrorMessage = ""; // normal message text outside (at top) of embed 
 let nameArr = [];
 let quantityArr = [];
 let linksArr = [];
 let priceArr = [];
 let descriptionArr = [];
+
+// output information
+let amazonLink = "";
+let eslLink = "";
+let newSheetUrl = "";
+let specialErrorMessage = ""; // normal message text outside (at top) of embed 
+
+let amazonBuyerName = "Annie Vu"; // for Amazon ESL form
+let amazonBuyerDiscordTag = "<@365619835939455005>"; // Annie Vu 
+let discordTag = "<@533956992272695297>" ; // default ping recipient (colin)
+// let discordTag = "test_discord_tag" ; // ping nobody
+let debugDiscordTag = "<@339824792092016640>"; // toby
 const randomColor = Math.floor(Math.random() * 0xFFFFFF);
 const orderID = randomColor;
 
+// embed/script data
+let thumbNailUrl = "";
+let footerUrl = ""; // required for Discord embed's footer
+let footerText = ""; // bottom text of embed
+let mode = "";
+let isPosting = false; // boolean flag to determine if should post to Discord
+let isAmazon = false;
+
+
+
 const properties = PropertiesService.getScriptProperties().getProperties(); // loads properties map with values defined in project properties (Settings > scroll down)
+
 
 function handleError(e, failName) {
     let stack = e.stack.split("\n");
@@ -42,14 +52,34 @@ function handleError(e, failName) {
 }
 
 
-function mainOnSubmit(e) {
+function mainOnSubmit(event) {
 
   try {
-    readSheet();
+    parseForm(event);
+  } catch(e) {
+    handleError(e, "parseForm()");
+    return;
+  }
+
+  try {
+    if(mode === "materials") {
+      console.log("materials");
+      readNormalSheet();
+    }
+    else if(mode === "config") {
+      console.log("config");
+      readConfigSheet();
+      updateConfig();
+      return; // stop processing after updating config throughout system
+    }
+    else if(mode === "food") {
+      //TODO need to figure out what exactly needs to be done for this kind of form
+      console.log("food");
+    }
   } catch(e) {
     handleError(e, "readSheet()");
     return;
-  }
+  } 
 
   try{
     eslLinkRes = getESLForm();

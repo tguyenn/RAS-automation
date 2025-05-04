@@ -33,15 +33,15 @@ function replaceForm() {
     amazonESLLink = amazonESLLink.replace("amazonBuyerName", amazonBuyerName);
     amazonESLLink = amazonESLLink.replace("amazonOrderNumber", ""); // fill manually in form
     amazonESLLink = amazonESLLink.replace("amount", totalPrice);
-    eslLinkRes = amazonESLLink;
+    eslLink = amazonESLLink;
   } else {
     nonAmazonESLLink = nonAmazonESLLink.replace("vendor", vendorName);
     nonAmazonESLLink = nonAmazonESLLink.replace("amount", totalPrice);
-    eslLinkRes = nonAmazonESLLink;
+    eslLink = nonAmazonESLLink;
   }
-  // eslLinkRes = eslLinkRes.replace("email", email);
-  eslLinkRes = eslLinkRes.replace("email", "ut.ieee.ras@gmail.com"); // hardcode email to main ras account
-  eslLinkRes = eslLinkRes.replace("date", formattedDate);
+  // eslLink = eslLink.replace("email", email);
+  eslLink = eslLink.replace("email", "ut.ieee.ras@gmail.com"); // hardcode email to main ras account
+  eslLink = eslLink.replace("date", formattedDate);
 
   if (specialNotes.trim() === "") {
         specialNotes = "N/A";
@@ -50,17 +50,17 @@ function replaceForm() {
         specialNotes = specialNotes.replace(/%/g, " percent"); // Replace % with "percent"
   }
 
-  eslLinkRes = eslLinkRes.replace("specialNotes", specialNotes);
-  eslLinkRes = eslLinkRes.replace("description", descRes); // fill this in manually in form
-  eslLinkRes = eslLinkRes.replace("reasonforrequest", reasonRes); // fill this in manually in form 
-  // eslLinkRes = encodeURIComponent(eslLinkRes); // idk why but the link exploded for some reason. dont care enough to investigate when we alr have working solution below
-  eslLinkRes = eslLinkRes.replace(/ /g, "%20"); // replace ALL spaces with %20   
-  eslLinkRes = eslLinkRes.replace(/,/g, "%2C"); // replace ALL commas with %2C
+  eslLink = eslLink.replace("specialNotes", specialNotes);
+  eslLink = eslLink.replace("description", descRes); // fill this in manually in form
+  eslLink = eslLink.replace("reasonforrequest", reasonRes); // fill this in manually in form 
+  // eslLink = encodeURIComponent(eslLink); // idk why but the link exploded for some reason. dont care enough to investigate when we alr have working solution below
+  eslLink = eslLink.replace(/ /g, "%20"); // replace ALL spaces with %20   
+  eslLink = eslLink.replace(/,/g, "%2C"); // replace ALL commas with %2C
   
-  eslLinkRes = eslLinkRes.replace(/[\*\(\)\r\n]+/g, ''); //remove ALL instances of *, (, ), carriage returns, newlines
+  eslLink = eslLink.replace(/[\*\(\)\r\n]+/g, ''); //remove ALL instances of *, (, ), carriage returns, newlines
 
 
-  return eslLinkRes;
+  return eslLink;
 }
 
 

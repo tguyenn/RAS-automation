@@ -3,8 +3,13 @@
  */
 
 
-let ipaddress = "13.59.233.128"; 
+// const DISCORD_POST_URL = `http://${ipaddress}:3000/send-message`;
+
+// let ipaddress = "13.59.233.128"; 
+let ipaddress = properties['AWS_IP_ADDRESS'];
 const DISCORD_POST_URL = `http://${ipaddress}:3000/send-message`;
+
+// ipaddress = 'http://13.59.233.128:3000/send-message';
 
 // const DISCORD_POST_URL = properties['LIVE_DISCORD_WEBHOOK_URL']; // defined in script properties (Script Settings > Scroll to bottom)
 // const DISCORD_POST_URL = properties['TEST_DISCORD_WEBHOOK_URL'];
@@ -158,13 +163,14 @@ function preparePayload() {
 // posts error message to discord
 function postKill(process) { 
   items = []; // clear contents
+  DISCORD_WEBHOOK_URL = properties['LIVE_DISCORD_WEBHOOK_URL']; // if something is wrong with bot, make sure u can post the embed by using a discord webhook
   Logger.log(`
   postKill JSON debug dump: \n
   specialErrorMessage: ${specialErrorMessage} \n
   items: ${items} \n
   footerText: ${footerText} \n
   randomColor: ${randomColor} \n
-  DISCORD_POST_URL: ${DISCORD_POST_URL}
+  DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL}
   `);
 
   Utilities.sleep(1000); 
@@ -175,7 +181,7 @@ function postKill(process) {
            "muteHttpExceptions": true
           },
     "payload": JSON.stringify({
-    "content": discordTag + "\n" + specialErrorMessage, // this is the unformatted text above the rich embed
+    "content": debugDiscordTag + "\n" + specialErrorMessage, // this is the unformatted text above the rich embed
     "embeds": [{
       "title": `something broke lmao (${process})`,
       "color": randomColor,
@@ -189,7 +195,7 @@ function postKill(process) {
     })
   };
 
-    let response = UrlFetchApp.fetch(DISCORD_POST_URL, options); 
+    let response = UrlFetchApp.fetch(DISCORD_WEBHOOK_URL, options); 
     // Logger.log("response: " + response);
 
     return;
