@@ -12,29 +12,19 @@ function readNormalSheet() {
   let lastRow = sheet.getRange("A1:A").getValues(); // get last row with content based on column A
   lastRow = lastRow.filter(String).length;
 
-  // go from X2:XlastRow and store data into respective variables
-  for(i = 1; i < 6; i++) { // for each data column
-      let range = sheet.getRange(2, i, lastRow - 1); // Read from row 2 to the last row in the column
-    let columnData = range.getValues(); // This returns a 2D array (e.g., [[value1], [value2], ...])
-    dataArray = columnData.map(row => row[0]); // Flatten to a 1D array
-    switch (i) {
-      case 1:
-        nameArr = dataArray;
-        break;
-      case 2:
-        linksArr = dataArray;
-        break;
-      case 3:
-        quantityArr = dataArray;
-        break;
-      case 4:
-        priceArr = dataArray;
-        break;
-      case 5:
-        descriptionArr = dataArray;
-        break;
-    }
-  }
+  // Get all data from columns 1 to 5, starting from row 2 to lastRow
+  let range = sheet.getRange(2, 1, lastRow - 1, 5); // (startRow, startCol, numRows, numCols)
+  let allData = range.getValues(); // 2D array: [[name, link, quantity, price, description], ...]
+
+  // Split columns into individual arrays
+  allData.forEach(row => {
+    nameArr.push(row[0]);
+    linksArr.push(row[1]);
+    quantityArr.push(row[2]);
+    priceArr.push(row[3]);
+    descriptionArr.push(row[4]);
+  });
+
 
   let sheetData = sheet.getRange('H3:H10').getValues(); // put data from table on right into an array
   sheetData = sheetData.map(row => row[0]); // flatten to 1D array
@@ -49,6 +39,8 @@ function readNormalSheet() {
   // Logger.log("sheet data: " + sheetData);
 
   itemsOrdered = lastRow - 1;
+  console.log("items ordered: " + itemsOrdered);
+  console.log("items: " + nameArr);
 
   switch(committeeName) {
     case "General":

@@ -2,14 +2,8 @@
  *  post embed to discord
  */
 
-
-// const DISCORD_POST_URL = `http://${ipaddress}:3000/send-message`;
-
-// let ipaddress = "13.59.233.128"; 
 let ipaddress = properties['AWS_IP_ADDRESS'];
 const DISCORD_POST_URL = `http://${ipaddress}:3000/send-message`;
-
-// ipaddress = 'http://13.59.233.128:3000/send-message';
 
 // const DISCORD_POST_URL = properties['LIVE_DISCORD_WEBHOOK_URL']; // defined in script properties (Script Settings > Scroll to bottom)
 // const DISCORD_POST_URL = properties['TEST_DISCORD_WEBHOOK_URL'];
@@ -21,8 +15,6 @@ let embed2 = [];
 let options; // text customizations for embed
 
 function postEmbed() { 
-
-  footerText = `${orderID}`; // test
 
   preparePayload();
   if(itemsOrdered < 17) { // only post one embed
@@ -47,18 +39,25 @@ function postEmbed() {
 
 function preparePayload() {
   let payloadContentString = "";
-  payloadContentString = "\n[Prefilled ESL Form](" + eslLinkRes + ")\n";
-
-  if(fundingSource != "HCB Committee Funds") {
-    payloadContentString == "";
+  
+  if(fundingSource === "ESL Committee Funds") {
+    payloadContentString = "\n[Prefilled ESL Form](" + eslLinkRes + ")\n";
+  }
+  else if(fundingSource != "HCB Committee Funds") {
+    payloadContentString == ""; // HCB means dont need to submit anything to ESL
   }
 
-  if(isAmazon) {
-    payloadContentString = payloadContentString + "[Generated Amazon Cart](" + amazonLink + ")";
-  }
-  if(!isAmazon) {
-    payloadContentString = payloadContentString + "[Generated Spreadsheet Link](" + newSheetUrl + ")"
-  }
+    if(mode === "materials") {
+      if(isAmazon) {
+        payloadContentString = payloadContentString + "[Generated Amazon Cart](" + amazonLink + ")";
+      }
+      if(!isAmazon) {
+        payloadContentString = payloadContentString + "[Generated Spreadsheet Link](" + newSheetUrl + ")"
+      }
+    }
+    else if(mode === "food") {
+      payloadContentString = payloadContentString + "[Generated OOEF PDF Link](" + newOOEFLink + ")"
+    }
     if(itemsOrdered > 17) { // if more than 17 items, then need to send another discord message to get around max 25 fields per embed
     
     let splitIndex = 17;
@@ -100,21 +99,21 @@ function preparePayload() {
             "Content-Type": "application/json",
             },
       "payload": JSON.stringify({
-      "content": discordTag + " " + payloadContentString + "\n" + specialErrorMessage, // this is the unformatted (normal) text above the rich embed
-      "embeds": [{
-        "title": `${itemsOrdered} unique links!`,
-        "color": randomColor,
-        "fields": embed1,
-        "footer": {
-          // "text": footerText,
-          // ...(footerUrl ? { "icon_url": footerUrl } : {})
-        },
-        "thumbnail": {
-          "url": thumbNailUrl
-        },
-        // "timestamp": new Date().toISOString()
-      }]
-    })
+        "content": discordTag + " " + payloadContentString + "\n" + specialErrorMessage, // this is the unformatted (normal) text above the rich embed
+        "embeds": [{
+          "title": `${itemsOrdered} unique links!`,
+          "color": randomColor,
+          "fields": embed1,
+          "footer": {
+            // "text": footerText,
+            // ...(footerUrl ? { "icon_url": footerUrl } : {})
+          },
+          "thumbnail": {
+            "url": thumbNailUrl
+          },
+          // "timestamp": new Date().toISOString()
+        }]
+      })
     };
   }
   else {
@@ -141,8 +140,8 @@ function preparePayload() {
             "Content-Type": "application/json",
             },
       "payload": JSON.stringify({
-      "content": discordTag + " " + payloadContentString + "\n" + specialErrorMessage, // this is the unformatted (normal) text above the rich embed
-      "embeds": [{
+        "content": discordTag + " " + payloadContentString + "\n" + specialErrorMessage, // this is the unformatted (normal) text above the rich embed
+        "embeds": [{
         "title": `${itemsOrdered} unique links!`,
         "color": randomColor,
         "fields": items,
@@ -154,8 +153,8 @@ function preparePayload() {
           "url": thumbNailUrl
         },
         "timestamp": new Date().toISOString()
-      }]
-    })
+        }]
+      })
     };
   }
 }

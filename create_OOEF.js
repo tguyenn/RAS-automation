@@ -19,18 +19,25 @@ let ooefData = {
 };
 
 
-function createOOEF() {
-  const blob = DriveApp.getFileById("1rA9pn5wmNwB0yvZIVdd0-CDRYbncPMHK").getBlob(); // OOEF
-  folderId = "1XI1To3_-XnbSHawwdNQE-IkKuw6G1zGF";
-  folder = DriveApp.getFolderById(folderId);
-  const PDFA = PDFApp.setPDFBlob(blob);
-  PDFA.setValuesToPDFForm(ooefData)
-    .then(newBlob => {
-        const renamedBlob = newBlob.setName(`${vendorName}`);
-        folder.createFile(renamedBlob);
-        newOOEFLink = newBlob.getUrl;
-        Logger.log(`created OOEF form with name ${newBlob.getName()} `)
-      })
-    .catch(err => Logger.log(err));
+async function createOOEF() {
 
+  const today = new Date();
+  today.setDate(today.getDate() + 7); // 7 days out from today
+  formattedDate = today.getFullYear() + '-' + // YYYY-MM-DD (acceptable format for URL)
+                      (today.getMonth() + 1).toString().padStart(2, '0') + '-' +
+                      today.getDate().toString().padStart(2, '0');
+
+  const blob = DriveApp.getFileById("1rA9pn5wmNwB0yvZIVdd0-CDRYbncPMHK").getBlob();
+  const folderId = "1XI1To3_-XnbSHawwdNQE-IkKuw6G1zGF";
+  const folder = DriveApp.getFolderById(folderId);
+
+  const PDFA = PDFApp.setPDFBlob(blob);
+  const newBlob = await PDFA.setValuesToPDFForm(ooefData); // wait for async task
+
+  const renamedBlob = newBlob.setName(`${formattedDate} - ${vendorName}`);
+  const file = folder.createFile(renamedBlob);
+  newOOEFLink = file.getUrl();
+
+  Logger.log(`Created OOEF form with name ${file.getName()} and link ${newOOEFLink}`);
+  console.log("Final link: " + newOOEFLink);
 }

@@ -23,9 +23,10 @@ let newOOEFLink = "";
 let specialErrorMessage = ""; // normal message text outside (at top) of embed 
 
 let amazonBuyerName = "Annie Vu"; // for Amazon ESL form
-let amazonBuyerDiscordTag = "<@365619835939455005>"; // Annie Vu 
-let discordTag = "<@533956992272695297>" ; // default ping recipient (colin)
-// let discordTag = "test_discord_tag" ; // ping nobody
+// let amazonBuyerDiscordTag = "<@365619835939455005>"; // Annie Vu 
+// let discordTag = "<@533956992272695297>" ; // default ping recipient (colin)
+let amazonBuyerDiscordTag = "amazon_test_discord_tag"; // ping nobody amazon 
+let discordTag = "normal_test_discord_tag" ; // ping nobody normal   
 let debugDiscordTag = "<@339824792092016640>"; // toby
 const randomColor = Math.floor(Math.random() * 0xFFFFFF);
 const orderID = randomColor;
@@ -33,12 +34,10 @@ const orderID = randomColor;
 // embed/script data
 let thumbNailUrl = "";
 let footerUrl = ""; // required for Discord embed's footer
-let footerText = ""; // bottom text of embed
+let footerText = `${orderID}`; // bottom text of embed
 let mode = "";
-let isPosting = false; // boolean flag to determine if should post to Discord
+let isPosting = false; // boolean flag to determine if should post to Discord orders channel
 let isAmazon = false;
-
-
 
 const properties = PropertiesService.getScriptProperties().getProperties(); // loads properties map with values defined in project properties (Settings > scroll down)
 
@@ -53,7 +52,7 @@ function handleError(e, failName) {
 }
 
 
-function mainOnSubmit(event) {
+async function mainOnSubmit(event) {
 
   try {
     parseForm(event);
@@ -68,7 +67,7 @@ function mainOnSubmit(event) {
       readNormalSheet();
     }
     else if(mode === "food") {
-      //TODO need to figure out what exactly needs to be done for this kind of form
+      readFoodSheet();
       console.log("food");
     }
     else if(mode === "config") {
@@ -89,22 +88,29 @@ function mainOnSubmit(event) {
     return;
   }
 
-  if(!isAmazon) {
-    try {
-      getSheet();  // makes formatted sheet for ESL submission
-    } catch(e) {
-      handleError(e, "getSheet()");
-      return;
-    }
-  } else {
-    try {
-      discordTag = amazonBuyerDiscordTag;
-      generateAmazonLink();
-    } catch(e) {
-      handleError(e, "generateAmazonLink()");
-      return;
+  if(mode === "materials") {
+    if(!isAmazon) {
+      try {
+        getSheet();  // makes formatted sheet for ESL submission
+      } catch(e) {
+        handleError(e, "getSheet()");
+        return;
+      }
+    } else {
+      try {
+        discordTag = amazonBuyerDiscordTag;
+        generateAmazonLink();
+      } catch(e) {
+        handleError(e, "generateAmazonLink()");
+        return;
+      }
     }
   }
+  else if(mode === "food") {
+    await createOOEF();
+    console.log("lol" + newOOEFLink);
+  }
+
 
   try {
     editMasterSheet();
