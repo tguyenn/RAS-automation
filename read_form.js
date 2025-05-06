@@ -1,6 +1,6 @@
 // determine which sheet to read and what paperwork to spit out
 
-function parseForm(event) {
+function readForm(event) {
   const response = event.response.getItemResponses();
 
   for (const responseAnswer of response) { 

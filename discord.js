@@ -12,6 +12,11 @@ let items = []; // not actual purchased items, this is filled with fields that g
 let embed1 = [];
 let embed2 = [];
 
+
+ // for handling more than one embed in discord bot
+  // apply the button row to the last message only
+  // on deletion, grab the first embed's title and grab the last embed's tag
+
 let options; // text customizations for embed
 
 function postEmbed() { 
@@ -23,8 +28,6 @@ function postEmbed() {
   }
   else { // post two embeds
     response = UrlFetchApp.fetch(DISCORD_POST_URL, options); // message 1/2
-    // Logger.log("response 1: " + response);
-    Utilities.sleep(1000); // ensure second message gets sent as second message
 
     // replace embed's field with message 2 contents
     let payloadObj = JSON.parse(options.payload);
@@ -35,31 +38,30 @@ function postEmbed() {
     response = UrlFetchApp.fetch(DISCORD_POST_URL, options); // message 2 of 2
     // Logger.log("response 2: " + response);
   }
+  console.log("posted embeds!");
 }
 
 function preparePayload() {
   let payloadContentString = "";
   
-  if(fundingSource === "ESL Committee Funds") {
-    payloadContentString = "\n[Prefilled ESL Form](" + eslLinkRes + ")\n";
-  }
-  else if(fundingSource != "HCB Committee Funds") {
-    payloadContentString == ""; // HCB means dont need to submit anything to ESL
+  if(fundingSource != "HCB Committee Funds") { // all non-HCB purchases must be through ESL
+    payloadContentString = "\n[Prefilled ESL Form](" + eslLink + ")\n";
   }
 
-    if(mode === "materials") {
-      if(isAmazon) {
-        payloadContentString = payloadContentString + "[Generated Amazon Cart](" + amazonLink + ")";
-      }
-      if(!isAmazon) {
-        payloadContentString = payloadContentString + "[Generated Spreadsheet Link](" + newSheetUrl + ")"
-      }
+  if(mode === "materials") {
+    if(isAmazon) {
+      payloadContentString = payloadContentString + "[Generated Amazon Cart](" + amazonLink + ")";
     }
-    else if(mode === "food") {
-      payloadContentString = payloadContentString + "[Generated OOEF PDF Link](" + newOOEFLink + ")"
+    if(!isAmazon) {
+      payloadContentString = payloadContentString + "[Generated Spreadsheet Link](" + newSheetUrl + ")"
     }
-    if(itemsOrdered > 17) { // if more than 17 items, then need to send another discord message to get around max 25 fields per embed
-    
+  }
+  else if(mode === "food") {
+    payloadContentString = payloadContentString + "[Generated OOEF PDF Link](" + newOOEFLink + ")"
+  }
+
+  if(itemsOrdered > 17) { // if more than 17 items, then need to send another discord message to get around max 25 fields per embed
+  
     let splitIndex = 17;
 
     let nameArr1 = nameArr.slice(0, splitIndex);

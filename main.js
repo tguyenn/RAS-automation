@@ -23,11 +23,13 @@ let newOOEFLink = "";
 let specialErrorMessage = ""; // normal message text outside (at top) of embed 
 
 let amazonBuyerName = "Annie Vu"; // for Amazon ESL form
-// let amazonBuyerDiscordTag = "<@365619835939455005>"; // Annie Vu 
-// let discordTag = "<@533956992272695297>" ; // default ping recipient (colin)
-let amazonBuyerDiscordTag = "amazon_test_discord_tag"; // ping nobody amazon 
-let discordTag = "normal_test_discord_tag" ; // ping nobody normal   
+let amazonBuyerDiscordTag = "<@365619835939455005>"; // Annie Vu 
+let discordTag = "<@533956992272695297>" ; // default ping recipient (colin)
+// let amazonBuyerDiscordTag = "amazon_test_discord_tag"; // ping nobody amazon 
+// let discordTag = "normal_test_discord_tag" ; // ping nobody normal   
+
 let debugDiscordTag = "<@339824792092016640>"; // toby
+
 const randomColor = Math.floor(Math.random() * 0xFFFFFF);
 const orderID = randomColor;
 
@@ -55,9 +57,9 @@ function handleError(e, failName) {
 async function mainOnSubmit(event) {
 
   try {
-    parseForm(event);
+    readForm(event);
   } catch(e) {
-    handleError(e, "parseForm()");
+    handleError(e, "readForm()");
     return;
   }
 
@@ -82,9 +84,9 @@ async function mainOnSubmit(event) {
   } 
 
   try{
-    eslLinkRes = getESLForm();
+    setESLForm();
   } catch(e) {
-    handleError(e, "getESLForm()");
+    handleError(e, "setESLForm()");
     return;
   }
 
@@ -108,9 +110,7 @@ async function mainOnSubmit(event) {
   }
   else if(mode === "food") {
     await createOOEF();
-    console.log("lol" + newOOEFLink);
   }
-
 
   try {
     editMasterSheet();
