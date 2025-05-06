@@ -1,5 +1,7 @@
 // GLOBAL VARIABLES
 
+let properties = PropertiesService.getScriptProperties().getProperties(); // loads properties map with values defined in project properties (Settings > scroll down)
+
 // form data
 let fundingSource = "";
 let committeeName = "";
@@ -22,13 +24,13 @@ let newSheetUrl = "";
 let newOOEFLink = "";
 let specialErrorMessage = ""; // normal message text outside (at top) of embed 
 
-let amazonBuyerName = "Annie Vu"; // for Amazon ESL form
-let amazonBuyerDiscordTag = "<@365619835939455005>"; // Annie Vu 
-let discordTag = "<@533956992272695297>" ; // default ping recipient (colin)
-// let amazonBuyerDiscordTag = "amazon_test_discord_tag"; // ping nobody amazon 
-// let discordTag = "normal_test_discord_tag" ; // ping nobody normal   
+let amazonBuyerName = `${properties['AMZ_BUYER_NAME']}`; // for Amazon ESL form
+// let amazonBuyerDiscordTag = `<@${properties['DISC_AMZ_ORDER_TAG']}>`;
+// let discordTag = `<@${properties['DISC_NON_AMZ_ORDER_TAG']}>`;
+let debugDiscordTag = `<@${properties['DISC_DEBUG_TAG']}>`;
+let amazonBuyerDiscordTag = "amazon_test_discord_tag"; // ping nobody amazon 
+let discordTag = "normal_test_discord_tag" ; // ping nobody normal   
 
-let debugDiscordTag = "<@339824792092016640>"; // toby
 
 const randomColor = Math.floor(Math.random() * 0xFFFFFF);
 const orderID = randomColor;
@@ -36,13 +38,10 @@ const orderID = randomColor;
 // embed/script data
 let thumbNailUrl = "";
 let footerUrl = ""; // required for Discord embed's footer
-let footerText = `${orderID}`; // bottom text of embed
+let footerText = orderID; // bottom text of embed
 let mode = "";
 let isPosting = false; // boolean flag to determine if should post to Discord orders channel
 let isAmazon = false;
-
-const properties = PropertiesService.getScriptProperties().getProperties(); // loads properties map with values defined in project properties (Settings > scroll down)
-
 
 function handleError(e, failName) {
     let stack = e.stack.split("\n");
@@ -69,14 +68,13 @@ async function mainOnSubmit(event) {
       readNormalSheet();
     }
     else if(mode === "food") {
-      readFoodSheet();
       console.log("food");
+      readFoodSheet();
     }
     else if(mode === "config") {
       console.log("config");
-      readConfigSheet();
       updateConfig();
-      return; // stop processing after updating config throughout system
+      return; // stop processing after propagating config updates throughout system
     }
   } catch(e) {
     handleError(e, "readSheet()");

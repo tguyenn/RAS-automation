@@ -1,5 +1,7 @@
 // NOT TIED TO OTHER SCRIPT FILES
 
+// periodically run this script every 10 minutes or something
+
 // Keep track of last submitted donation by saving the last read ID. Use this as a landmark to see which donations are new
 // post thing to Discord 
 
@@ -18,7 +20,7 @@ function checkDues() {
   //   Logger.log(data[j].id);
   // }
   
-  let lastID = PropertiesService.getScriptProperties().getProperty('DYNAMIC_TEST_VAL');
+  let lastID = PropertiesService.getScriptProperties().getProperty('LAST_ID');
   if(lastID == data[0].id) {
     Logger.log(`data[0].id is the same as ${lastID}! exiting...`);
     return;
@@ -42,7 +44,7 @@ function checkDues() {
     }
 
     lastID = data[0].id; // replace with the first (top) of the list
-    PropertiesService.getScriptProperties().setProperty('DYNAMIC_TEST_VAL', lastID);
+    PropertiesService.getScriptProperties().setProperty('LAST_ID', lastID);
     Logger.log(`updated lastID to ${lastID}`)
   }
   

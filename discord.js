@@ -5,17 +5,9 @@
 let ipaddress = properties['AWS_IP_ADDRESS'];
 const DISCORD_POST_URL = `http://${ipaddress}:3000/send-message`;
 
-// const DISCORD_POST_URL = properties['LIVE_DISCORD_WEBHOOK_URL']; // defined in script properties (Script Settings > Scroll to bottom)
-// const DISCORD_POST_URL = properties['TEST_DISCORD_WEBHOOK_URL'];
-
 let items = []; // not actual purchased items, this is filled with fields that get published in discord embed <- tbh i think this is used elsewhere but im not paid enough to clean up
 let embed1 = [];
 let embed2 = [];
-
-
- // for handling more than one embed in discord bot
-  // apply the button row to the last message only
-  // on deletion, grab the first embed's title and grab the last embed's tag
 
 let options; // text customizations for embed
 
@@ -161,20 +153,39 @@ function preparePayload() {
   }
 }
 
+function postSmallEmbed(message) { 
+  notificationWebhookUrl = properties['DISCUSSION_WEBHOOK']
+  const options = {
+          "method": "post",
+          "headers": {
+          "Content-Type": "application/json",
+          },
+    "payload": JSON.stringify({
+    "content": "", // this is the unformatted text above the rich embed
+    "embeds": [{
+      "title": message,
+      "color": randomColor,
+      "fields": [],
+      "timestamp": new Date().toISOString()
+      }]
+    })
+  };
+
+    UrlFetchApp.fetch(notificationWebhookUrl, options);
+    return;
+}
+
 // posts error message to discord
 function postKill(process) { 
   items = []; // clear contents
-  DISCORD_WEBHOOK_URL = properties['LIVE_DISCORD_WEBHOOK_URL']; // if something is wrong with bot, make sure u can post the embed by using a discord webhook
+  DISCORD_WEBHOOK_URL = properties['ORDERS_WEBHOOK']; // if something is wrong with bot, make sure u can post the error embed by using a discord webhook
   Logger.log(`
-  postKill JSON debug dump: \n
-  specialErrorMessage: ${specialErrorMessage} \n
-  items: ${items} \n
-  footerText: ${footerText} \n
-  randomColor: ${randomColor} \n
-  DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL}
+    postKill JSON debug dump: \n
+    specialErrorMessage: ${specialErrorMessage} \n
+    footerText: ${footerText} \n
+    DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL}
   `);
 
-  Utilities.sleep(1000); 
   const options = {
           "method": "post",
           "headers": {
@@ -197,7 +208,7 @@ function postKill(process) {
   };
 
     let response = UrlFetchApp.fetch(DISCORD_WEBHOOK_URL, options); 
-    // Logger.log("response: " + response);
+    Logger.log("response: " + response);
 
     return;
 }

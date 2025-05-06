@@ -31,8 +31,10 @@ async function createOOEF() {
                       (today.getMonth() + 1).toString().padStart(2, '0') + '-' +
                       today.getDate().toString().padStart(2, '0');
 
-  const blob = DriveApp.getFileById("1rA9pn5wmNwB0yvZIVdd0-CDRYbncPMHK").getBlob();
-  const folderId = "1XI1To3_-XnbSHawwdNQE-IkKuw6G1zGF";
+  const fileId = properties['OOEF_FILE_ID'];
+  const folderId = properties['OOEF_FOLDER_ID'];
+
+  const blob = DriveApp.getFileById(fileId).getBlob();
   const folder = DriveApp.getFolderById(folderId);
 
   const PDFA = PDFApp.setPDFBlob(blob);

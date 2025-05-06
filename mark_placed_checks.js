@@ -15,7 +15,7 @@ function doPost(event) {
 }
 
 function markChecks(numItems, tag, committeeName) {
-    let mastersheetID = "1uw0LqBbjbEuq2X-QjBsj0W6ebI_K2bclHLlOi9tjy1Q"; // https://docs.google.com/spreadsheets/d/1uw0LqBbjbEuq2X-QjBsj0W6ebI_K2bclHLlOi9tjy1Q/edit?gid=1275180039#gid=1275180039
+    let mastersheetID = properties['BUDGET_SHEET_ID'];
     const spreadsheet = SpreadsheetApp.openById(mastersheetID);
     Logger.log("opening sheet of: " + committeeName);
     const sheet = spreadsheet.getSheetByName(committeeName); 

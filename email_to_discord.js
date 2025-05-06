@@ -31,28 +31,3 @@ function checkAndPrintEmailsWithLabel() {
     label.removeFromThread(thread);
   });
 }
-
-
-// yeah this is gona be called by other things cry about it
-function postSmallEmbed(message) { 
-  notificationWebhookUrl = properties['LIVE_NOTIFICATION_WEBHOOK_URL']
-  // notificationWebhookUrl = properties['TEST_NOTIFICATION_WEBHOOK_URL']
-  const options = {
-          "method": "post",
-          "headers": {
-          "Content-Type": "application/json",
-          },
-    "payload": JSON.stringify({
-    "content": "", // this is the unformatted text above the rich embed
-    "embeds": [{
-      "title": `${message}`,
-      "color": randomColor,
-      "fields": [],
-      "timestamp": new Date().toISOString()
-      }]
-    })
-  };
-
-    UrlFetchApp.fetch(notificationWebhookUrl, options);
-    return;
-}

@@ -14,7 +14,7 @@ let estCost;
 let actCost;
 
 function readFoodSheet() {
-  let inputSheetID = "1Ud5ZEs9mdV4Lk5InK7P9jcXaRlwkBsqSURoN1luDPls";
+  let inputSheetID = properties['ORDER_CONFIG_SHEET_ID'];
   const spreadsheet = SpreadsheetApp.openById(inputSheetID); // open arbitrary template sheet 
   const sheet = spreadsheet.getSheetByName("Food Invoice"); 
 
@@ -22,17 +22,17 @@ function readFoodSheet() {
   sheetData = sheetData.map(row => row[0]); // flatten to 1D array
   vendorName = sheetData[0];
   foodType = sheetData[1];
-  reqReason = sheetData[2]; // reason for request
-  restAddy = sheetData[3];
-  restPhone = sheetData[4];
-  timeBlock = sheetData[5];
-  specTime = sheetData[6];
-  personName = sheetData[7];
-  personEmail = sheetData[8];
-  personEid = sheetData[9];
-  eventLoc = sheetData[10];
-  eventDate = Utilities.formatDate(sheetData[11], Session.getScriptTimeZone(), "M/d/yyyy"); // otherwise GAS parses it as a raw date object (too much info)
-  attendCount = sheetData[12];
+  restAddy = sheetData[2];
+  restPhone = sheetData[3];
+  reqReason = sheetData[4];
+  eventLoc = sheetData[5];
+  eventDate = Utilities.formatDate(sheetData[6], Session.getScriptTimeZone(), "M/d/yyyy"); // otherwise GAS parses it as a raw date object (too much info)
+  attendCount = sheetData[7];
+  timeBlock = sheetData[8];
+  specTime = sheetData[9];
+  personName = sheetData[10];
+  personEmail = sheetData[11];
+  personEid = sheetData[12];
   estCost = sheetData[13];
   actCost = sheetData[14];
 
@@ -53,12 +53,13 @@ function readFoodSheet() {
   "Estimated Cost",
   "Actual Cost"];
 
+  // only use one cost. reject input if there are 2
   if(estCost && actCost) {
     specialErrorMessage += `Someone put 2 different costs (choose one)`;
     throw new Error(`Execution aborted bc someone put two costs`);
   }
   else if(estCost) { 
-    priceArr[0] = estCost; // only choose one as per the pdf
+    priceArr[0] = estCost;
   }
   else if(actCost){
     priceArr[0] = actCost;

@@ -5,7 +5,7 @@
 
 function readNormalSheet() {
 
-  let inputSheetID = "1Ud5ZEs9mdV4Lk5InK7P9jcXaRlwkBsqSURoN1luDPls";
+  let inputSheetID = properties['ORDER_CONFIG_SHEET_ID'];
   const spreadsheet = SpreadsheetApp.openById(inputSheetID); // open arbitrary template sheet 
   const sheet = spreadsheet.getSheetByName("Materials Order"); 
 
@@ -46,17 +46,17 @@ function readNormalSheet() {
     case "General":
       thumbNailUrl = "https://i.imgur.com/jvF3FoH.jpg";
       break;
-    case "VEXU":
-      thumbNailUrl = "https://i.imgur.com/2vwgZHO.jpg";
-      break;
-    case "RoboMaster":
-      thumbNailUrl = "https://i.imgur.com/4UEoyMs.jpg";
-      break;
     case "Demobots":
       thumbNailUrl = "https://i.imgur.com/nrR07HS.jpg";
       break;
     case "IGVC":
       thumbNailUrl = "https://i.imgur.com/M5TQiDf.jpg";
+      break;
+    case "RoboMaster":
+      thumbNailUrl = "https://i.imgur.com/4UEoyMs.jpg";
+      break;
+    case "VEXU":
+      thumbNailUrl = "https://i.imgur.com/2vwgZHO.jpg";
       break;
     case "Robotathon":
       thumbNailUrl = "https://i.imgur.com/XHbsPvd.jpg";

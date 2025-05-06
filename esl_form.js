@@ -38,7 +38,7 @@ function setESLForm() {
       nonAmazonESLLink = nonAmazonESLLink.replace("amount", totalPrice);
       eslLink = nonAmazonESLLink;
     }
-    eslLink = eslLink.replace("email", "ut.ieee.ras@gmail.com"); // hardcode email to main ras account
+    eslLink = eslLink.replace("email", properties['ORG_EMAIL']); // hardcode email to main ras account
     eslLink = eslLink.replace("date", formattedDate);
 
     if (specialNotes.trim() === "") {
@@ -55,7 +55,7 @@ function setESLForm() {
   else if(mode === "food") {
 
     eslLink = foodESLLink;
-    eslLink = eslLink.replace("email", "ut.ieee.ras@gmail.com"); // hardcode email to main ras account
+    eslLink = eslLink.replace("email", properties['ORG_EMAIL']); // hardcode email to main ras account
     eslLink = eslLink.replace("description", foodType); 
     eslLink = eslLink.replace("reasonforrequest", reqReason); 
     eslLink = eslLink.replace("vendor", vendorName); 
