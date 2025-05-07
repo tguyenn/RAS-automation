@@ -42,7 +42,7 @@ function preparePayload() {
     payloadContentString += "[Generated OOEF PDF Link](" + newOOEFLink + ")";
   }
 
-  // Prepare fields for the embed
+  // dump all fields into a single embed and split up to meet discord's 25 field per embed requirement
   const fields = [
     { "name": "Committee", "value": committeeName, "inline": false },
     { "name": "Special Notes", "value": specialNotes, "inline": false },
@@ -67,7 +67,6 @@ function preparePayload() {
     "color": randomColor,
     "fields": chunk,
     "footer": index === fieldChunks.length - 1 ? { "text": footerText, ...(footerUrl ? { "icon_url": footerUrl } : {}) } : undefined,
-    "image" : { url: "https://imgur.com/a/GDLJnDc.png" },
     "thumbnail": index === 0 ? { "url": thumbNailUrl } : {}, // only have thumbnail for first embed
     "timestamp": index === fieldChunks.length - 1 ? new Date().toISOString() : "" // only timestamp last embed
   }));

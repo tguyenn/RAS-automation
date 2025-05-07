@@ -37,7 +37,7 @@ const orderID = randomColor;
 
 // embed/script data
 let thumbNailUrl = "";
-let footerUrl = ""; // long transparent image to standardize embed width
+let footerUrl = "";
 let footerText = orderID; // bottom text of embed
 let mode = "";
 let isPosting = false; // boolean flag to determine if should post to Discord orders channel
