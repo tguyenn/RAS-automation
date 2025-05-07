@@ -42,28 +42,14 @@ function readNormalSheet() {
   console.log("items ordered: " + itemsOrdered);
   console.log("items: " + nameArr);
 
-  switch(committeeName) {
-    case "General":
-      thumbNailUrl = "https://i.imgur.com/jvF3FoH.jpg";
-      break;
-    case "Demobots":
-      thumbNailUrl = "https://i.imgur.com/nrR07HS.jpg";
-      break;
-    case "IGVC":
-      thumbNailUrl = "https://i.imgur.com/M5TQiDf.jpg";
-      break;
-    case "RoboMaster":
-      thumbNailUrl = "https://i.imgur.com/4UEoyMs.jpg";
-      break;
-    case "VEXU":
-      thumbNailUrl = "https://i.imgur.com/2vwgZHO.jpg";
-      break;
-    case "Robotathon":
-      thumbNailUrl = "https://i.imgur.com/XHbsPvd.jpg";
-      break;
-    default: // if someone forgets to put the committee then the script explodes
-      specialErrorMessage = "Someone forgot to put the committee 🤷\n"
-      throw new Error("Execution aborted bc someone forgor to put the committee");
+  for(i = 1; i <= properties['NUM_COMMITTEES']; i++) {
+    if(committeeName == properties[`COMMITTEE_NAME_${i}`]) {
+      thumbNailUrl = properties[`COMMITTEE_ICONS_LINK_${i}`];
+    }
+  }
+  if(thumbNailUrl == "") {
+    specialErrorMessage = "Someone forgot to put the committee 🤷\n"
+    throw new Error("Execution aborted bc someone forgor to put the committee");
   }
 
   if(vendorName == "") {

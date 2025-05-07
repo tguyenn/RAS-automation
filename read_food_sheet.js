@@ -66,13 +66,13 @@ function readFoodSheet() {
   }
   totalPrice = priceArr[0];
 
-  if(estCost === "" && actCost === "") {
+  if(estCost == "" && actCost == "") {
       specialErrorMessage += `Someone forgot to put a cost`;
       throw new Error(`Execution aborted bc someone forgor to put the cost`);
   }
 
   for(i = 0; i < 12; i++) {
-    if(sheetData[i] === "") {
+    if(sheetData[i] == "") {
       specialErrorMessage += `someone forgot to put the ${fieldNames[i]}`;
       throw new Error(`Execution aborted bc someone forgor to put the ${fieldNames[i]}`);
     }
@@ -83,7 +83,7 @@ function readFoodSheet() {
   quantityArr[0] = 1;
   nameArr[0] = `${foodType}`
   linksArr[0] = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-  committeeName = "General";
+  committeeName = properties['COMMITTEE_NAME_1'];
   thumbNailUrl = "https://i.imgur.com/jvF3FoH.jpg";
   isPosting = true;
 

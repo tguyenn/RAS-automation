@@ -37,7 +37,7 @@ const orderID = randomColor;
 
 // embed/script data
 let thumbNailUrl = "";
-let footerUrl = ""; // required for Discord embed's footer
+let footerUrl = ""; // long transparent image to standardize embed width
 let footerText = orderID; // bottom text of embed
 let mode = "";
 let isPosting = false; // boolean flag to determine if should post to Discord orders channel
@@ -52,7 +52,7 @@ function handleError(e, failName) {
     return;
 }
 
-
+// async function allows script to wait until OOEF is actually done generating (PDFApp lib function is async for whatever reason, so script would continue execution with an invalid file otherwise)
 async function mainOnSubmit(event) {
 
   try {

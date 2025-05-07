@@ -28,15 +28,15 @@ function setESLForm() {
       : "Materials for " + committeeName + " committee project";
 
     if(isAmazon) {
-      amazonESLLink = amazonESLLink.replace("amazonBuyerName", amazonBuyerName);
-      amazonESLLink = amazonESLLink.replace("amazonOrderNumber", ""); // fill manually in form
-      amazonESLLink = amazonESLLink.replace("amount", totalPrice);
       eslLink = amazonESLLink;
+      eslLink = eslLink.replace("amazonBuyerName", amazonBuyerName);
+      eslLink = eslLink.replace("amazonOrderNumber", ""); // fill manually in form
+      eslLink = eslLink.replace("amount", totalPrice);
     } 
     else {
-      nonAmazonESLLink = nonAmazonESLLink.replace("vendor", vendorName);
-      nonAmazonESLLink = nonAmazonESLLink.replace("amount", totalPrice);
       eslLink = nonAmazonESLLink;
+      eslLink = eslLink.replace("vendor", vendorName);
+      eslLink = eslLink.replace("amount", totalPrice);
     }
     eslLink = eslLink.replace("email", properties['ORG_EMAIL']); // hardcode email to main ras account
     eslLink = eslLink.replace("date", formattedDate);
