@@ -6,7 +6,7 @@ async function createOOEF() {
   let benefit = testGemini(prompt);
 
   let ooefData = {
-    values: [
+    values: [ // note some field names are left commented out because you don't need them for events w/ +10 people
       // { "name": "Document ID", "value": "sample update text1" },
       // { "name": "form must accompany the payment voucher for processing within 30 days of the occasion", "value": "sample update text2" },
       { "name": "undefined", "value": `${personName}` }, 

@@ -55,8 +55,7 @@ function readFoodSheet() {
 
   // only use one cost. reject input if there are 2
   if(estCost && actCost) {
-    specialErrorMessage += `Someone put 2 different costs (choose one)`;
-    throw new Error(`Execution aborted bc someone put two costs`);
+    throw new Error(`Execution aborted bc someone put two costs (choose one)`);
   }
   else if(estCost) { 
     priceArr[0] = estCost;
@@ -67,13 +66,11 @@ function readFoodSheet() {
   totalPrice = priceArr[0];
 
   if(estCost == "" && actCost == "") {
-      specialErrorMessage += `Someone forgot to put a cost`;
       throw new Error(`Execution aborted bc someone forgor to put the cost`);
   }
 
   for(i = 0; i < 12; i++) {
     if(sheetData[i] == "") {
-      specialErrorMessage += `someone forgot to put the ${fieldNames[i]}`;
       throw new Error(`Execution aborted bc someone forgor to put the ${fieldNames[i]}`);
     }
   }

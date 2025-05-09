@@ -2,7 +2,7 @@
 
 // periodically run this script every 10 minutes or something
 
-// Keep track of last submitted donation by saving the last read ID. Use this as a landmark to see which donations are new
+// Keep track of last submitted donation by saving the last read ID in script properties. Use this as a landmark to see which donations are new
 // post thing to Discord 
 
 function checkDues() {

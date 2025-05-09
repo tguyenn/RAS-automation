@@ -3,14 +3,14 @@
  */
 
 // publicly exposed function that creates URL for newly generated sheet
-function getSheet() {
-  let sheet = createSheet();
+function createSheet() {
+  let sheet = sheetToFolder();
   createTemplate(sheet);
   populateData(sheet);
 }
 
 // create spreadsheet and place in specific folder in Google Drive
-function createSheet() {
+function sheetToFolder() {
   let today = new Date();
   let formattedDate = (today.getMonth() + 1) + '.' + today.getDate() + '.' + today.getFullYear();
   const spreadsheetName =  formattedDate + " " + vendorName;
@@ -52,7 +52,6 @@ function createTemplate(sheet) {
   range = sheet.getRange(3, 9, summaryData.length, 1);
   range.setValues(summaryData);  
 }
-// fill template with data
 
 
 function populateData(sheet) {

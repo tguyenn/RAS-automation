@@ -48,19 +48,16 @@ function readNormalSheet() {
     }
   }
   if(thumbNailUrl == "") {
-    specialErrorMessage = "Someone forgot to put the committee 🤷\n"
-    throw new Error("Execution aborted bc someone forgor to put the committee");
+    throw new Error("Execution aborted because someone forgot to put the committee");
   }
 
   if(vendorName == "") {
-    specialErrorMessage += "Someone forgot to put the vendor 😔\n";
-    throw new Error("Execution aborted bc someone forgor to put the vendor");
+    throw new Error("Execution aborted because someone forgot to put the vendor");
   }
 
   for(i = 0; i < itemsOrdered; i++) {
     if(quantityArr[i] == 0) {
-      specialErrorMessage += `Somoene forgot to put quantity for ${nameArr[i]} 😢 defaulted it to 1\n`;
-      quantityArr[i] = "1"; 
+      throw new Error(`Someone forgot to put the funding source for ${nameArr[i]}`);
     }
   }  
 
@@ -73,8 +70,7 @@ function readNormalSheet() {
   }
 
   if(fundingSource == "") {
-    specialErrorMessage += "Someone forgot to put the funding source ☹️☹️ defaulted to ESL committee funds\n";
-    fundingSource = "ESL Committee Funds";
+    throw new Error("Someone forgot to put the funding source");
   }
   
   if((fundingSource !== "ESL Committee Funds") && (fundingSource !== "HCB Committee Funds")) {
@@ -95,7 +91,7 @@ function readNormalSheet() {
   totalPrice += parseFloat(shipping);
   totalPrice = parseFloat(totalPrice.toFixed(2)); // prevent weird decimals
 
-  if(needsClear == true) {
+  if(needsClear) {
     // Logger.log("clearing input sheet!");
     clearSheet(sheet); // clear sheet for next use
   }

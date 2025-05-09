@@ -22,25 +22,25 @@ let amazonLink = "";
 let eslLink = "";
 let newSheetUrl = "";
 let newOOEFLink = "";
-let specialErrorMessage = ""; // normal message text outside (at top) of embed 
 
-let amazonBuyerName = `${properties['AMZ_BUYER_NAME']}`; // for Amazon ESL form
-// let amazonBuyerDiscordTag = `<@${properties['DISC_AMZ_ORDER_TAG']}>`;
-// let discordTag = `<@${properties['DISC_NON_AMZ_ORDER_TAG']}>`;
-let debugDiscordTag = `<@${properties['DISC_DEBUG_TAG']}>`;
-let amazonBuyerDiscordTag = "amazon_test_discord_tag"; // ping nobody amazon 
-let discordTag = "normal_test_discord_tag" ; // ping nobody normal   
+// discord tags
+// let amazonBuyerDiscordTag = `<@${properties['DISC_AMZ_ORDER_TAG']}>\n`;
+// let discordTag = `<@${properties['DISC_NON_AMZ_ORDER_TAG']}>\n`;
+let amazonBuyerDiscordTag = "amazon_test_discord_tag\n"; // ping nobody amazon 
+let discordTag = "normal_test_discord_tag\n" ; // ping nobody normal   
+let debugDiscordTag = `<@${properties['DISC_DEBUG_TAG']}>\n`;
+let amazonBuyerName = `${properties['AMZ_BUYER_NAME']}\n`; // for Amazon ESL form
 
 
 const randomColor = Math.floor(Math.random() * 0xFFFFFF);
 const orderID = randomColor;
 
 // embed/script data
+let footerText = orderID; // bottom text of embed
 let thumbNailUrl = "";
 let footerUrl = "";
-let footerText = orderID; // bottom text of embed
 let mode = "";
-let isPosting = false; // boolean flag to determine if should post to Discord orders channel
+let isPosting = false; // flag to determine if should post to Discord orders channel
 let isAmazon = false;
 
 function handleError(e, failName) {
@@ -91,17 +91,17 @@ async function mainOnSubmit(event) {
   if(mode === "materials") {
     if(!isAmazon) {
       try {
-        getSheet();  // makes formatted sheet for ESL submission
+        createSheet();  // makes formatted sheet for ESL submission
       } catch(e) {
-        handleError(e, "getSheet()");
+        handleError(e, "createSheet()");
         return;
       }
     } else {
       try {
         discordTag = amazonBuyerDiscordTag;
-        generateAmazonLink();
+        setAmazonLink();
       } catch(e) {
-        handleError(e, "generateAmazonLink()");
+        handleError(e, "setAmazonLink()");
         return;
       }
     }

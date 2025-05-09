@@ -2,13 +2,13 @@
  * Generate Amazon cart based on global array of links
  */
 
-function generateAmazonLink() {
+function setAmazonLink() {
   amazonLink = "https://www.amazon.com/gp/aws/cart/add.html?";
 
   for(let i = 1; i <= itemsOrdered; i++) { // start at 1 because of how ASIN works
     let asin = extractASIN(linksArr[i-1]);
     if(asin == null) {
-      specialNotes = `${specialNotes} Could not find ASIN for ${nameArr[i-1]}: ${linksArr[i-1]}`;
+      specialNotes = `${specialNotes} Could not find ASIN for ${nameArr[i-1]}: ${linksArr[i-1]}\n`;
     }
     amazonLink = `${amazonLink}ASIN.${i}=${asin}&Quantity.${i}=${quantityArr[i-1]}&`;
   }

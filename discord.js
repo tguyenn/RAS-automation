@@ -5,16 +5,11 @@
 let iPAddress = properties['AWS_IP_ADDRESS'];
 const DISCORD_POST_URL = `http://${iPAddress}:3000/send-message`;
 
-let items = []; // not actual purchased items, this is filled with fields that get published in discord embed <- tbh i think this is used elsewhere but im not paid enough to clean up
-let embed1 = [];
-let embed2 = [];
-
 let options; // text customizations for embed
 
 function postEmbed() { 
   preparePayload();
-  response = UrlFetchApp.fetch(DISCORD_POST_URL, options);
-  console.log("posted embeds!");
+  UrlFetchApp.fetch(DISCORD_POST_URL, options);
 }
 
 // returns array of arrays of length 25
@@ -30,16 +25,16 @@ function preparePayload() {
   let payloadContentString = "";
 
   if (fundingSource !== "HCB Committee Funds") {
-    payloadContentString = "\n[Prefilled ESL Form](" + eslLink + ")\n";
+    payloadContentString = "[Prefilled ESL Form](" + eslLink + ")\n";
   }
   if (mode === "materials") {
     if (isAmazon) {
-      payloadContentString += "[Generated Amazon Cart](" + amazonLink + ")";
+      payloadContentString += "[Generated Amazon Cart](" + amazonLink + ")\n";
     } else {
-      payloadContentString += "[Generated Spreadsheet Link](" + newSheetUrl + ")";
+      payloadContentString += "[Generated Spreadsheet Link](" + newSheetUrl + ")\n";
     }
   } else if (mode === "food") {
-    payloadContentString += "[Generated OOEF PDF Link](" + newOOEFLink + ")";
+    payloadContentString += "[Generated OOEF PDF Link](" + newOOEFLink + ")\n";
   }
 
   // dump all fields into a single embed and split up to meet discord's 25 field per embed requirement
@@ -66,7 +61,7 @@ function preparePayload() {
     "title": index === 0 ? `${itemsOrdered} unique links!` : `Continued (${index + 1})`,
     "color": randomColor,
     "fields": chunk,
-    "footer": index === fieldChunks.length - 1 ? { "text": footerText, ...(footerUrl ? { "icon_url": footerUrl } : {}) } : undefined,
+    "footer": index === fieldChunks.length - 1 ? { "text": footerText } : undefined,
     "thumbnail": index === 0 ? { "url": thumbNailUrl } : {}, // only have thumbnail for first embed
     "timestamp": index === fieldChunks.length - 1 ? new Date().toISOString() : "" // only timestamp last embed
   }));
@@ -78,12 +73,13 @@ function preparePayload() {
       "Content-Type": "application/json",
     },
     "payload": JSON.stringify({
-      "content": discordTag + " " + payloadContentString + "\n" + specialErrorMessage,
+      "content": discordTag + payloadContentString, // whitespace to tell bot where to split
       "embeds": embeds
     })
   };
 }
 
+// posts embed with no content except message var as title
 function postSmallEmbed(message) { 
   notificationWebhookUrl = properties['DISCUSSION_WEBHOOK']
   const options = {
@@ -107,11 +103,9 @@ function postSmallEmbed(message) {
 
 // posts error message to discord
 function postKill(process) { 
-  items = []; // clear contents
   DISCORD_WEBHOOK_URL = properties['ORDERS_WEBHOOK']; // if something is wrong with bot, make sure u can post the error embed by using a discord webhook
   Logger.log(`
     postKill JSON debug dump: \n
-    specialErrorMessage: ${specialErrorMessage} \n
     footerText: ${footerText} \n
     DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL}
   `);
@@ -123,14 +117,13 @@ function postKill(process) {
            "muteHttpExceptions": true
           },
     "payload": JSON.stringify({
-    "content": debugDiscordTag + "\n" + specialErrorMessage, // this is the unformatted text above the rich embed
+    "content": debugDiscordTag, // this is the unformatted text above the rich embed
     "embeds": [{
-      "title": `something broke lmao (${process})`,
+      "title": `Boken 💔🥀 (${process})`,
       "color": randomColor,
-      "fields": items,
+      "fields": [],
       "footer": {
         "text": footerText,
-        ...(footerUrl ? { "icon_url": footerUrl } : {})
       },
       "timestamp": new Date().toISOString()
       }]
