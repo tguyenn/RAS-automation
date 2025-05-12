@@ -24,16 +24,20 @@ function splitIntoChunks(array, chunkSize) {
 function preparePayload() {
   let payloadContentString = "";
 
-  if (fundingSource !== "HCB Committee Funds") {
+// if order is using HCB funds, skip
+// if order is Amazon, skip
+// therefore if HCB funds or is amazon, dont skip
+// ~(HCB funds || amazon) = ~HCB funds && ~amazon
+  if (fundingSource != "HCB Committee Funds" && !isAmazon) { // amazon doesnt need this link here anymore bc it can break lol
     payloadContentString = "[Prefilled ESL Form](" + eslLink + ")\n";
   }
-  if (mode === "materials") {
+  if (mode == "materials") {
     if (isAmazon) {
       payloadContentString += "[Generated Amazon Cart](" + amazonLink + ")\n";
     } else {
       payloadContentString += "[Generated Spreadsheet Link](" + newSheetUrl + ")\n";
     }
-  } else if (mode === "food") {
+  } else if (mode == "food") {
     payloadContentString += "[Generated OOEF PDF Link](" + newOOEFLink + ")\n";
   }
 

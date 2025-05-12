@@ -2,18 +2,6 @@
 
 // expose this as an endpoint (deploy as web app) so discord bot can tell script to mark appropriate order group as placed
 
-function doPost(event) {
-  const data = JSON.parse(event.postData.contents);
-  Logger.log("Received data: " + JSON.stringify(data));
-
-  try{
-    markChecks(data.numItems, data.tag, data.committeeName);
-  } catch(e) {
-    postKill(`Error processing markChecks with ${e}`);
-  }
-  return;
-}
-
 function markChecks(numItems, tag, committeeName) {
     let mastersheetID = properties['BUDGET_SHEET_ID'];
     const spreadsheet = SpreadsheetApp.openById(mastersheetID);

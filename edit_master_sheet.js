@@ -59,7 +59,8 @@ function editGrants(spreadsheet) {
   const sheet = spreadsheet.getSheetByName("Grant Tracking"); 
 
 // Date	Grant	Committee	Item Total	Vendor
-  let targetRow = sheet.getLastRow() + 1;
+  let lastRow = sheet.getRange("A1:A").getValues(); // get last row with content based on column A
+  lastRow = lastRow.filter(String).length + 1; 
   const today = new Date();
   const formattedDate = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
 

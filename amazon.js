@@ -8,7 +8,7 @@ function setAmazonLink() {
   for(let i = 1; i <= itemsOrdered; i++) { // start at 1 because of how ASIN works
     let asin = extractASIN(linksArr[i-1]);
     if(asin == null) {
-      specialNotes = `${specialNotes} Could not find ASIN for ${nameArr[i-1]}: ${linksArr[i-1]}\n`;
+      throw new Error(`Could not find ASIN (product serial number) for ${nameArr[i-1]}: ${linksArr[i-1]}. Please make sure your Amazon link has the ASIN in it!`);
     }
     amazonLink = `${amazonLink}ASIN.${i}=${asin}&Quantity.${i}=${quantityArr[i-1]}&`;
   }

@@ -34,8 +34,8 @@ function readNormalSheet() {
   shipping = sheetData[3];
   specialNotes = sheetData[4] + "\n";
   fundingSource = sheetData[5];
-  let needsClear = sheetData[6];
-  isPosting = sheetData[7];
+  isPosting = sheetData[6];
+  let needsClear = sheetData[7];
   // Logger.log("sheet data: " + sheetData);
 
   itemsOrdered = lastRow - 1;
@@ -74,11 +74,7 @@ function readNormalSheet() {
   }
   
   if((fundingSource !== "ESL Committee Funds") && (fundingSource !== "HCB Committee Funds")) {
-    specialNotes += `This order should use funds from ${fundingSource} grant`;
-  }
-
-  if(specialNotes == "") {
-    specialNotes = "N/A";
+    specialNotes += `This order should use funds from ${fundingSource} grant\n`;
   }
 
   if(vendorName == "Amazon" || vendorName == "amazon" || vendorName == "AMZN" || vendorName == "AMAZON") {
