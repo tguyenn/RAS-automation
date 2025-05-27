@@ -41,8 +41,19 @@ function writeConfig() {
 }
 
 function pushConfigToBot() {
-  let iPAddress = properties['AWS_IP_ADDRESS'];
-  const response = UrlFetchApp.fetch(`http://${iPAddress}:3000/update-config`, {
+
+  const keysToRemove = [
+    "BOT_TOKEN",
+    "AWS_IP_ADDRESS",
+    "DISCUSSION_WEBHOOK",
+    "ORDERS_WEBHOOK",
+    "GOOGLE_API_KEY"
+  ];
+  for (const key of keysToRemove) {
+    delete props[key]; // Will silently skip if key doesn't exist
+  }
+  let ipAddress = properties['AWS_IP_ADDRESS'];
+  const response = UrlFetchApp.fetch(`http://${ipAddress}:3000/update-config`, {
     method: "post",
     contentType: "application/json",
     payload: JSON.stringify(props)

@@ -26,16 +26,17 @@ function readNormalSheet() {
   });
 
 
-  let sheetData = sheet.getRange('H3:H10').getValues(); // put data from table on right into an array
+  let sheetData = sheet.getRange('H3:H11').getValues(); // put data from table on right into an array
   sheetData = sheetData.map(row => row[0]); // flatten to 1D array
   committeeName = sheetData[0];
-  vendorName = sheetData[1];
-  shippingType = sheetData[2];
-  shipping = sheetData[3];
-  specialNotes = sheetData[4] + "\n";
-  fundingSource = sheetData[5];
-  isPosting = sheetData[6];
-  let needsClear = sheetData[7];
+  subCommitteeName = sheetData[1];
+  vendorName = sheetData[2];
+  shippingType = sheetData[3];
+  shipping = sheetData[4];
+  specialNotes = sheetData[5] + "\n";
+  fundingSource = sheetData[6];
+  isPosting = sheetData[7];
+  let needsClear = sheetData[8];
   // Logger.log("sheet data: " + sheetData);
 
   itemsOrdered = lastRow - 1;
@@ -77,6 +78,10 @@ function readNormalSheet() {
     specialNotes += `This order should use funds from ${fundingSource} grant\n`;
   }
 
+  if(subCommitteeName == "N/A") {
+    subCommitteeName = "";
+  }
+
   if(vendorName == "Amazon" || vendorName == "amazon" || vendorName == "AMZN" || vendorName == "AMAZON") {
     isAmazon = true;
   }
@@ -88,7 +93,7 @@ function readNormalSheet() {
   totalPrice = parseFloat(totalPrice.toFixed(2)); // prevent weird decimals
 
   if(needsClear) {
-    // Logger.log("clearing input sheet!");
+    Logger.log("clearing input sheet!");
     clearSheet(sheet); // clear sheet for next use
   }
 }
@@ -99,12 +104,12 @@ function clearSheet(sheet) {
   let lastRow = sheet.getRange("A1:A").getValues(); // read to end of col A
   lastRow = lastRow.filter(String).length;
 
-  Logger.log("lastRow: " + lastRow);
 
   let range = sheet.getRange(2, 1, lastRow, 5); 
   range.clearContent(); // clear main data
   sheet.getRange('H3:H8').clearContent(); // clear Other Information table
 
-  sheet.getRange('H8').setValue("ESL Committee Funds"); // default
+  sheet.getRange('H4').setValue("N/A"); // default
+  sheet.getRange('H9').setValue("ESL Committee Funds"); // default
 
 }

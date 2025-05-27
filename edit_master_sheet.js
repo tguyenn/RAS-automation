@@ -24,33 +24,35 @@ function editMasterSheet() {
     let itemTotalFormula = `=PRODUCT(J${row}, K${row}) + L${row}`;
     
     let newData = [
-      nameArr[i],          // Column F
-      descriptionArr[i],   // G
-      vendorName,          // H
-      linksArr[i],         // I
-      quantityArr[i],      // J
-      priceArr[i],         // K
-      0,                   // L (Shipping)
-      itemTotalFormula,    // M (Total)
-      fundingSource,       // N
-      orderID              // O
+      subCommitteeName,
+      nameArr[i],
+      descriptionArr[i],   
+      vendorName,          
+      linksArr[i],         
+      quantityArr[i],      
+      priceArr[i],         
+      0,                   // shipping
+      itemTotalFormula,    // total price
+      fundingSource,       
+      orderID              
     ];
     console.log(nameArr[i]);
     if(i == 0) {
-      newData[6] = shipping; // first row should have shipping applied
+      newData[7] = shipping; // first row should have shipping applied
     }
     
     allData.push(newData);
     dateValues.push([formattedDate]); // For column A
-  } 
+  }
 
   // Set all all dates (column A) and all row data at once (columns F to O)
-  sheet.getRange(targetRow, 1, itemsOrdered, 1).setValues(dateValues);
-  sheet.getRange(targetRow, 6, itemsOrdered, allData[0].length).setValues(allData);
-
   console.log("writing data to budget sheet: " + allData);
+  sheet.getRange(targetRow, 1, itemsOrdered, 1).setValues(dateValues);
+  sheet.getRange(targetRow, 5, itemsOrdered, allData[0].length).setValues(allData);
+
 
   if(fundingSource != "ESL Committee Funds") { 
+    console.log("writing data to grant sheet");
     editGrants(spreadsheet);
   }
 }
@@ -58,12 +60,15 @@ function editMasterSheet() {
 function editGrants(spreadsheet) {  
   const sheet = spreadsheet.getSheetByName("Grant Tracking"); 
 
-// Date	Grant	Committee	Item Total	Vendor
-  let lastRow = sheet.getRange("A1:A").getValues(); // get last row with content based on column A
+
+  let lastRow = sheet.getRange("B1:B").getValues(); // get last row with content based on column B
   lastRow = lastRow.filter(String).length + 1; 
+  console.log("grant last row:" + lastRow);
+
   const today = new Date();
   const formattedDate = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
 
+// Date	Grant	Committee	Item Total Vendor
   let allData = [];
   for (let i = 0; i < itemsOrdered; i++) {
     let itemTotalPrice = quantityArr[i] * priceArr[i];
@@ -83,5 +88,5 @@ function editGrants(spreadsheet) {
   }
 
   // Set all rows in one call (columns A to F)
-  sheet.getRange(targetRow, 1, itemsOrdered, allData[0].length).setValues(allData);
+  sheet.getRange(lastRow, 1, itemsOrdered, allData[0].length).setValues(allData);
 }

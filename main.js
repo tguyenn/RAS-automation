@@ -5,6 +5,7 @@ let properties = PropertiesService.getScriptProperties().getProperties(); // loa
 // form data
 let fundingSource = "";
 let committeeName = "";
+let subCommitteeName = "";
 let vendorName = "";
 let specialNotes = "N/A";
 let itemsOrdered = 0;

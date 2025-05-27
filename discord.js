@@ -33,7 +33,7 @@ function preparePayload() {
   }
   if (mode == "materials") {
     if (isAmazon) {
-      payloadContentString += "[Generated Amazon Cart](" + amazonLink + ")\n";
+      payloadContentString += "[Generated Amazon Cart (SUBMIT THIS FIRST AND WAIT FOR EMAILS BEFORE BUTTON)](" + amazonLink + ")\n";
     } else {
       payloadContentString += "[Generated Spreadsheet Link](" + newSheetUrl + ")\n";
     }
