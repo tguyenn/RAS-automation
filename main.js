@@ -24,11 +24,11 @@ let eslLink = "";
 let newSheetUrl = "";
 let newOOEFLink = "";
 
-// discord tags
+// discord tags/names
 let amazonBuyerDiscordTag = `<@${properties['DISC_AMZ_ORDER_TAG']}>\n`;
 let discordTag = `<@${properties['DISC_NON_AMZ_ORDER_TAG']}>\n`;
 // let amazonBuyerDiscordTag = "amazon_test_discord_tag\n"; // ping nobody amazon 
-// let discordTag = "normal_test_discord_tag\n" ; // ping nobody normal   
+// let discordTag = "normal_test_discord_tag\n" ; // ping nobody normal  
 let debugDiscordTag = `<@${properties['DISC_DEBUG_TAG']}>\n`;
 let amazonBuyerName = `${properties['AMZ_BUYER_NAME']}\n`; // for Amazon ESL form
 

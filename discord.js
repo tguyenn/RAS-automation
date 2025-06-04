@@ -111,28 +111,29 @@ function postKill(process) {
   Logger.log(`
     postKill JSON debug dump: \n
     footerText: ${footerText} \n
-    DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL}
+    DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL} \n
+    
   `);
 
-  const options = {
-          "method": "post",
-          "headers": {
-          "Content-Type": "application/json",
-           "muteHttpExceptions": true
-          },
-    "payload": JSON.stringify({
-    "content": debugDiscordTag, // this is the unformatted text above the rich embed
+const options = {
+  "method": "post",
+  "headers": {
+    "Content-Type": "application/json",
+    "muteHttpExceptions": true
+  },
+  "payload": JSON.stringify({
+    "content": debugDiscordTag, // unformatted text above the embed
     "embeds": [{
-      "title": `Boken 💔🥀 (${process})`,
+      "title": "Boken 💔🥀",
+      "description": `${process}`,
       "color": randomColor,
-      "fields": [],
       "footer": {
         "text": footerText,
       },
       "timestamp": new Date().toISOString()
-      }]
-    })
-  };
+    }]
+  })
+};
 
     let response = UrlFetchApp.fetch(DISCORD_WEBHOOK_URL, options); 
     Logger.log("response: " + response);
