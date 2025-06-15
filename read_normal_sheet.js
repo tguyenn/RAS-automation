@@ -82,9 +82,10 @@ function readNormalSheet() {
     subCommitteeName = "";
   }
 
-  if(vendorName == "Amazon" || vendorName == "amazon" || vendorName == "AMZN" || vendorName == "AMAZON") {
-    isAmazon = true;
-  }
+  // disabling Amazon order for the time being since nobody can access the ABP account
+  // if(vendorName == "Amazon" || vendorName == "amazon" || vendorName == "AMZN" || vendorName == "AMAZON") {
+  //   isAmazon = true;
+  // }
 
   for(let i = 0; i < itemsOrdered; i++) {
     totalPrice += (parseFloat(priceArr[i]) * parseInt(quantityArr[i]));

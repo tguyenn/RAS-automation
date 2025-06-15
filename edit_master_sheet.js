@@ -49,44 +49,4 @@ function editMasterSheet() {
   console.log("writing data to budget sheet: " + allData);
   sheet.getRange(targetRow, 1, itemsOrdered, 1).setValues(dateValues);
   sheet.getRange(targetRow, 5, itemsOrdered, allData[0].length).setValues(allData);
-
-
-  if(fundingSource != "ESL Committee Funds") { 
-    console.log("writing data to grant sheet");
-    editGrants(spreadsheet);
-  }
-}
-
-function editGrants(spreadsheet) {  
-  const sheet = spreadsheet.getSheetByName("Grant Tracking"); 
-
-
-  let lastRow = sheet.getRange("B1:B").getValues(); // get last row with content based on column B
-  lastRow = lastRow.filter(String).length + 1; 
-  console.log("grant last row:" + lastRow);
-
-  const today = new Date();
-  const formattedDate = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
-
-// Date	Grant	Committee	Item Total Vendor
-  let allData = [];
-  for (let i = 0; i < itemsOrdered; i++) {
-    let itemTotalPrice = quantityArr[i] * priceArr[i];
-    let newData = [
-      formattedDate,     // Column A
-      fundingSource,     // B
-      committeeName,     // C
-      nameArr[i],        // D
-      itemTotalPrice,    // E
-      vendorName         // F
-    ];
-    if(i == 0) { // apply shipping to first item
-      newData[4] += shipping;
-      console.log("item total price with shipping: " + itemTotalPrice);
-    }
-    allData.push(newData);
-  }
-
-  // Set all rows in one call (columns A to F)
-  sheet.getRange(lastRow, 1, itemsOrdered, allData[0].length).setValues(allData);
 }

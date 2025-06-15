@@ -9,13 +9,16 @@
 let newDonData = [];
 
 function checkDues() {
-  let numResults = 30;
+  let numResults = 1;
   const hcbName = properties["HCB_ORG_NAME"];
   const url = `https://hcb.hackclub.com/api/v3/organizations/${hcbName}/donations?expand=amount_cents&per_page=${numResults}`;
   const options = {method: 'GET', headers: {Accept: 'application/json'}};
   result = UrlFetchApp.fetch(url, options);
   result = result.getContentText();
   let data = JSON.parse(result);
+  
+  Logger.log(data);
+  return;
   
   let lastID = PropertiesService.getScriptProperties().getProperty('LAST_ID');
   if(lastID == data[0].id) {
