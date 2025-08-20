@@ -27,8 +27,8 @@ let newOOEFLink = "";
 // discord tags/names
 let amazonBuyerDiscordTag = `<@${properties['DISC_AMZ_ORDER_TAG']}>\n`;
 let discordTag = `<@${properties['DISC_NON_AMZ_ORDER_TAG']}>\n`;
-// let amazonBuyerDiscordTag = "amazon_test_discord_tag\n"; // ping nobody amazon 
-// let discordTag = "normal_test_discord_tag\n" ; // ping nobody normal  
+// let amazonBuyerDiscordTag = "amazon_test_discord_tag\n"; // ping nobody amazon (DEBUG)
+// let discordTag = "normal_test_discord_tag\n" ; // ping nobody normal  (DEBUG)
 let debugDiscordTag = `<@${properties['DISC_DEBUG_TAG']}>\n`;
 let amazonBuyerName = `${properties['AMZ_BUYER_NAME']}\n`; // for Amazon ESL form
 
@@ -122,7 +122,7 @@ async function mainOnSubmit(event) {
     if(isPosting) { // this signal is a checkbox toggle in the input order sheet
       postEmbed();
     }
-    else { // feedback for non-purchase logging
+    else { // discord feedback for non-purchase logging
       postSmallEmbed(`Successfully wrote ${itemsOrdered} items from ${vendorName} to ${committeeName}'s sheets for ${fundingSource}!`)
     }
   } catch(e) {

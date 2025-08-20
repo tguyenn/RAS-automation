@@ -1,6 +1,5 @@
 function doPost(event) {
   
-  
   const data = JSON.parse(event.postData.contents);
   // postSmallEmbed(JSON.stringify(data));
 

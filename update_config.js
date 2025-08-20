@@ -10,7 +10,7 @@ function updateConfig() {
     throw new Error(` Execution aborted because need ORDER_CONFIG_SHEET_ID property to be set manually (Settings > scroll down)`);
   }
   readConfigSheet(inputSheetId); // parse config values from sheet into key and value arrays
-  writeConfig(); // saves config values in script properties and refresh properties var
+  writeConfig(); // saves config values in GAS properties and refresh properties var
   pushConfigToBot();
 } 
 
@@ -31,27 +31,28 @@ function writeConfig() {
       props[mapKeys[i]] = String(mapValues[i] ?? '');
     }
     scriptProperties.setProperties(props);
+    console.log("Finished setting new config vals to GAS!");
+    postSmallEmbed("Successfully wrote new config to GAS properties!");
+    properties = PropertiesService.getScriptProperties().getProperties(); // reload after update
   } catch (err) {
-    console.log('Failed to set properties with error %s', err.message);
+    console.log('Failed to set GAS properties with error %s', err.message);
   }
-  properties = PropertiesService.getScriptProperties().getProperties(); // reload after update
-  console.log("Finished setting new config vals to script!");
-  postSmallEmbed("Successfully wrote new config to script properties!");
-
 }
 
 function pushConfigToBot() {
 
-  const keysToRemove = [
-    "BOT_TOKEN",
-    "AWS_IP_ADDRESS",
-    "DISCUSSION_WEBHOOK",
-    "ORDERS_WEBHOOK",
-    "GOOGLE_API_KEY"
-  ];
-  for (const key of keysToRemove) {
-    delete props[key]; // Will silently skip if key doesn't exist
-  }
+// commenting our for time being while we figure out a more secure way to do this
+  // const keysToRemove = [ // secrets
+  //   "BOT_TOKEN",
+  //   "AWS_IP_ADDRESS",
+  //   "DISCUSSION_WEBHOOK",
+  //   "ORDERS_WEBHOOK",
+  //   "GOOGLE_API_KEY"
+  // ];
+  // for (const key of keysToRemove) {
+  //   delete props[key]; // will silently skip if key no exist
+  // }
+
   let ipAddress = properties['AWS_IP_ADDRESS'];
   const response = UrlFetchApp.fetch(`http://${ipAddress}:3000/update-config`, {
     method: "post",
