@@ -25,10 +25,10 @@ let newSheetUrl = "";
 let newOOEFLink = "";
 
 // discord tags/names
-let amazonBuyerDiscordTag = `<@${properties['DISC_AMZ_ORDER_TAG']}>\n`;
-let discordTag = `<@${properties['DISC_NON_AMZ_ORDER_TAG']}>\n`;
-// let amazonBuyerDiscordTag = "amazon_test_discord_tag\n"; // ping nobody amazon (DEBUG)
-// let discordTag = "normal_test_discord_tag\n" ; // ping nobody normal  (DEBUG)
+// let amazonBuyerDiscordTag = `<@${properties['DISC_AMZ_ORDER_TAG']}>\n`;
+// let discordTag = `<@${properties['DISC_NON_AMZ_ORDER_TAG']}>\n`;
+let amazonBuyerDiscordTag = "amazon_test_discord_tag\n"; // ping nobody amazon (DEBUG)
+let discordTag = "normal_test_discord_tag\n" ; // ping nobody normal  (DEBUG)
 let debugDiscordTag = `<@${properties['DISC_DEBUG_TAG']}>\n`;
 let amazonBuyerName = `${properties['AMZ_BUYER_NAME']}\n`; // for Amazon ESL form
 
@@ -55,7 +55,6 @@ function handleError(e, failName) {
 
 // async function allows script to wait until OOEF is actually done generating (PDFApp lib function is async for whatever reason, so script would continue execution with an invalid file otherwise)
 async function mainOnSubmit(event) {
-
   try {
     readForm(event);
   } catch(e) {

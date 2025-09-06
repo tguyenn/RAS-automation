@@ -14,6 +14,7 @@ function doPost(event) {
     try{
       markChecks(data.numItems, data.tag, data.committeeName);
     } catch(e) {
+      postSmallEmbed("Error processing markChecks with ${e}");
       postKill(`Error processing markChecks with ${e}`);
       return;
     }

@@ -10,7 +10,7 @@ function updateConfig() {
     throw new Error(` Execution aborted because need ORDER_CONFIG_SHEET_ID property to be set manually (Settings > scroll down)`);
   }
   readConfigSheet(inputSheetId); // parse config values from sheet into key and value arrays
-  writeConfig(); // saves config values in GAS properties and refresh properties var
+  writeGASConfig(); // saves config values in GAS properties and refresh properties var
   pushConfigToBot();
 } 
 
@@ -23,7 +23,7 @@ function readConfigSheet(inputSheetId) {
   mapKeys = mapKeys.map(row => row[0]);
 }
 
-function writeConfig() {
+function writeGASConfig() {
   try{
     const scriptProperties = PropertiesService.getScriptProperties();
     for (let i = 0; i < mapKeys.length; i++) { // create key:value mapping
@@ -31,9 +31,9 @@ function writeConfig() {
       props[mapKeys[i]] = String(mapValues[i] ?? '');
     }
     scriptProperties.setProperties(props);
+    properties = PropertiesService.getScriptProperties().getProperties(); // reload after update
     console.log("Finished setting new config vals to GAS!");
     postSmallEmbed("Successfully wrote new config to GAS properties!");
-    properties = PropertiesService.getScriptProperties().getProperties(); // reload after update
   } catch (err) {
     console.log('Failed to set GAS properties with error %s', err.message);
   }
@@ -41,7 +41,7 @@ function writeConfig() {
 
 function pushConfigToBot() {
 
-// commenting our for time being while we figure out a more secure way to do this
+// commenting out for time being while we figure out a more secure way to do this
   // const keysToRemove = [ // secrets
   //   "BOT_TOKEN",
   //   "AWS_IP_ADDRESS",
@@ -65,7 +65,7 @@ function pushConfigToBot() {
 
   if (statusCode == 200) {
     Logger.log("Bot config update successful: " + content);
-    postSmallEmbed("Successfully wrote new config to bot!");
+    // postSmallEmbed("Successfully wrote new config to bot!");
   } else {
     Logger.log(`Failed to update config. Status: ${statusCode}, Response: ${content}`);
     postSmallEmbed("FAILED TO WRITE CONFIG TO BOT😔😔😔");

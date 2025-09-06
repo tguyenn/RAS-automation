@@ -44,7 +44,7 @@ function preparePayload() {
   // dump all fields into a single embed and split up to meet discord's 25 field per embed requirement
   const fields = [
     { "name": "Committee", "value": committeeName, "inline": false },
-    { "name": "Special Notes", "value": specialNotes, "inline": false },
+    { "name": "ESL Notes", "value": specialNotes, "inline": false },
     { "name": "Funding Source", "value": fundingSource, "inline": false },
     { "name": "Vendor", "value": vendorName, "inline": false },
     { "name": "Shipping", "value": `$${parseFloat(shipping).toFixed(2)}`, "inline": false },
