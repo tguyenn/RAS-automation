@@ -48,8 +48,8 @@ function setESLForm() {
           specialNotes = specialNotes.replace(/%/g, " percent"); // Replace % with "percent"
     }  
     eslLink = eslLink.replace("specialNotes", specialNotes);
-    eslLink = eslLink.replace("description", descRes); // fill this in manually in form
-    eslLink = eslLink.replace("reasonforrequest", reasonRes); // fill this in manually in form 
+    eslLink = eslLink.replace("description", descRes);
+    eslLink = eslLink.replace("reasonforrequest", reasonRes); 
 
   }
   else if(mode === "food") {

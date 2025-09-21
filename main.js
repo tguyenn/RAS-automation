@@ -25,10 +25,10 @@ let newSheetUrl = "";
 let newOOEFLink = "";
 
 // discord tags/names
-// let amazonBuyerDiscordTag = `<@${properties['DISC_AMZ_ORDER_TAG']}>\n`;
-// let discordTag = `<@${properties['DISC_NON_AMZ_ORDER_TAG']}>\n`;
-let amazonBuyerDiscordTag = "amazon_test_discord_tag\n"; // ping nobody amazon (DEBUG)
-let discordTag = "normal_test_discord_tag\n" ; // ping nobody normal  (DEBUG)
+let amazonBuyerDiscordTag = `<@${properties['DISC_AMZ_ORDER_TAG']}>\n`;
+let discordTag = `<@${properties['DISC_NON_AMZ_ORDER_TAG']}>\n`;
+// let amazonBuyerDiscordTag = "amazon_test_discord_tag\n"; // ping nobody amazon (DEBUG)
+// let discordTag = "normal_test_discord_tag\n" ; // ping nobody normal  (DEBUG)
 let debugDiscordTag = `<@${properties['DISC_DEBUG_TAG']}>\n`;
 let amazonBuyerName = `${properties['AMZ_BUYER_NAME']}\n`; // for Amazon ESL form
 

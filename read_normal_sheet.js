@@ -82,6 +82,15 @@ function readNormalSheet() {
     subCommitteeName = "";
   }
 
+  /*
+    .__                              __                 __  ._._.
+    |__| _____ ______   ____________/  |______    _____/  |_| | |
+    |  |/     \\____ \ /  _ \_  __ \   __\__  \  /    \   __\ | |
+    |  |  Y Y  \  |_> >  <_> )  | \/|  |  / __ \|   |  \  |  \|\|
+    |__|__|_|  /   __/ \____/|__|   |__| (____  /___|  /__|  ____
+            \/|__|                           \/     \/      \/\/
+
+  */
   // disabling Amazon order for the time being since nobody can access the ABP account
   // if(vendorName == "Amazon" || vendorName == "amazon" || vendorName == "AMZN" || vendorName == "AMAZON") {
   //   isAmazon = true;
